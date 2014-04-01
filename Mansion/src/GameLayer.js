@@ -1,8 +1,8 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
-        this._super( new cc.Color4B( 127, 127, 127, 255 ) );
-        this.setPosition( new cc.Point( 0, 0 ) );
-
+        this.background = new Background();
+        this.background.setPosition( new cc.Point( 750, 300 ) );
+        this.addChild( this.background );
         return true;
     }
 });
