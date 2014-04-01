@@ -13,7 +13,8 @@
         //SingleEngineFile:'',
         appFiles:[
             'src/GameLayer.js',
-            'src/Background.js'     //add your own files in order here
+            'src/Background.js',
+            'src/Kyoda.js'     //add your own files in order here
         ]
     };
 
