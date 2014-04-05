@@ -8,6 +8,7 @@ var Kyoda = cc.Sprite.extend({
 		this.y = y;
 		this.direction = Kyoda.DIR.STILL;
 		this.updatePosition();
+		this.checkBorder();
 
 		this.isLeft = false;
 		this.isRight = false;
@@ -29,6 +30,10 @@ var Kyoda = cc.Sprite.extend({
 		}
 	},
 
+	checkBorder: function(){
+
+	},
+
 	update: function( dt ){
 		if( this.isLeft )
 		{
@@ -40,18 +45,6 @@ var Kyoda = cc.Sprite.extend({
 		}
 		this.updatePosition();
 	}
-
-	// moveLeft: function(){
-	// 	var pos = this.getPosition();
-	// 	this.setPosition( pos.x-7, pos.y ); 
-	// 	this.direction = Kyoda.DIR.LEFT;
-	// },
-
-	// moveRight: function(){
-	// 	var pos = this.getPosition();
-	// 	this.setPosition( pos.x+7, pos.y ); 
-	// 	this.direction = Kyoda.DIR.RIGHT;
-	// }
 });
 
 

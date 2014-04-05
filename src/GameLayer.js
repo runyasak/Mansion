@@ -3,11 +3,16 @@ var GameLayer = cc.LayerColor.extend({
         this.background = new Background();
         this.background.setPosition( new cc.Point( 750, 300 ) );
 
-        this.kyoda = new Kyoda(750,161);
+        this.floor1 = new Floor_1();
+        this.floor1.setPosition( new cc.Point(600,240));
+
+        this.kyoda = new Kyoda(750,165);
         this.kyoda.scheduleUpdate();
+
 
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
+        this.addChild( this.floor1 );
         this.addChild( this.kyoda );
                 
         return true;
