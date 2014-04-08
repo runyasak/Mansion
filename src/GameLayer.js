@@ -10,10 +10,14 @@ var GameLayer = cc.LayerColor.extend({
         this.kyoda = new Kyoda(750,165);
         this.kyoda.scheduleUpdate();
 
+        this.gum = new Gum(400,165);
+        this.gum.scheduleUpdate();
+
 
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
+        this.addChild( this.gum);
         this.addChild( this.kyoda );
                 
         return true;

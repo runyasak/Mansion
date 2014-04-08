@@ -15,7 +15,8 @@
             'src/GameLayer.js',
             'src/Background.js',
             'src/Kyoda.js',
-            'src/Floor_1.js'     //add your own files in order here
+            'src/Floor_1.js',
+            'src/Gum.js'    //add your own files in order here
         ]
     };
 
