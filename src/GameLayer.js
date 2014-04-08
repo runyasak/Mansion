@@ -7,12 +7,17 @@ var GameLayer = cc.LayerColor.extend({
         this.floor1.setAnchorPoint(0.5,0);
         this.floor1.setPosition( new cc.Point(650,140));
 
-        this.kyoda = new Kyoda(750,165);
+        this.kyoda = new Kyoda(750,140);
+        this.kyoda.setAnchorPoint(0.5,0);
         this.kyoda.scheduleUpdate();
 
-        this.gum = new Gum(400,165);
+        this.gum = new Gum();
+        this.gum.setAnchorPoint(0.5,0);
+        this.gum.randomPosition();
         this.gum.scheduleUpdate();
 
+
+        this.scheduleUpdate();
 
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
@@ -45,6 +50,12 @@ var GameLayer = cc.LayerColor.extend({
         }
 
         this.kyoda.setDirection( false, Kyoda.DIR.STILL );
+    },
+
+    update: function(){
+        if(this.gum.closeTo(this.kyoda)){
+            this.gum.randomPosition();
+        }
     }
 });
 

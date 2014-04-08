@@ -34,12 +34,12 @@ var Kyoda = cc.Sprite.extend({
 
 	checkBorderLeft: function(){
 		var myPos = this.getPosition();
-		return myPos.x >= 315;
+		return myPos.x >= borderLeft;
 	},
 
 	checkBorderRight: function(){
 		var myPos = this.getPosition();
-		return myPos.x <= 985;
+		return myPos.x <= borderRight;
 	},
 
 	update: function( dt ){
