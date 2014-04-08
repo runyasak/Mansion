@@ -4,7 +4,8 @@ var GameLayer = cc.LayerColor.extend({
         this.background.setPosition( new cc.Point( 750, 300 ) );
 
         this.floor1 = new Floor_1();
-        this.floor1.setPosition( new cc.Point(600,240));
+        this.floor1.setAnchorPoint(0.5,0);
+        this.floor1.setPosition( new cc.Point(650,140));
 
         this.kyoda = new Kyoda(750,165);
         this.kyoda.scheduleUpdate();
