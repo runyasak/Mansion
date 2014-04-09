@@ -32,10 +32,12 @@ var GameLayer = cc.LayerColor.extend({
         if( e == cc.KEY.left)
         {
             this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
+            this.kyoda.flipCharacter(Kyoda.DIR.LEFT);
         }
         if( e == cc.KEY.right)
         {
             this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
+            this.kyoda.flipCharacter(Kyoda.DIR.RIGHT);
         }
     },
 

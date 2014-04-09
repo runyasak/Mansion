@@ -59,20 +59,18 @@ var Kyoda = cc.Sprite.extend({
 		if( this.isLeft && this.checkBorderLeft())
 		{
 			this.x -= Kyoda.MOVE_STEP;
-			this.flipCharacter(this.direction);
+
 		}
 		if( this.isRight && this.checkBorderRight())
 		{
 			this.x += Kyoda.MOVE_STEP;	
-			this.flipCharacter(this.direction);
 		}
-
 		this.updatePosition();
 	}
 });
 
 
-Kyoda.MOVE_STEP = 5;
+Kyoda.MOVE_STEP = 6;
 Kyoda.DIR = {
 	LEFT: -1,
 	RIGHT: 1
