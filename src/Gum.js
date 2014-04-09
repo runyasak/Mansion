@@ -2,6 +2,7 @@ var Gum = cc.Sprite.extend({
 	ctor: function(){
 		this._super();
 		this.initWithFile('images/gum.png');
+		//this.setFlippedY(true);
 	},
 
 	randomPosition: function(){

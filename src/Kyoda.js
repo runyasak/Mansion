@@ -6,7 +6,7 @@ var Kyoda = cc.Sprite.extend({
 
 		this.x = x;
 		this.y = y;
-		this.direction = Kyoda.DIR.STILL;
+		this.direction = Kyoda.DIR.LEFT;
 		this.updatePosition();
 
 		this.checkBorderLeft();
@@ -21,14 +21,27 @@ var Kyoda = cc.Sprite.extend({
 		this.setPosition(cc.p(this.x, this.y));
 	},
 
+	flipCharacter: function(dir){
+		if(this.direction == Kyoda.DIR.RIGHT)
+		{	
+			this.setFlippedX(true);
+		}
+		if(this.direction == Kyoda.DIR.LEFT)
+		{
+			this.setFlippedX(false);
+		}
+	},
+
 	setDirection: function( isMove, dir ){
 		if(dir == Kyoda.DIR.LEFT)
 		{
-			this.isLeft = isMove;
+			this.isLeft = isMove;			
+			this.direction = dir;
 		}
 		if(dir == Kyoda.DIR.RIGHT)
 		{
 			this.isRight = isMove;
+			this.direction = dir;
 		}
 	},
 
@@ -46,12 +59,13 @@ var Kyoda = cc.Sprite.extend({
 		if( this.isLeft && this.checkBorderLeft())
 		{
 			this.x -= Kyoda.MOVE_STEP;
+			this.flipCharacter(this.direction);
 		}
 		if( this.isRight && this.checkBorderRight())
 		{
 			this.x += Kyoda.MOVE_STEP;	
+			this.flipCharacter(this.direction);
 		}
-
 
 		this.updatePosition();
 	}
@@ -61,6 +75,5 @@ var Kyoda = cc.Sprite.extend({
 Kyoda.MOVE_STEP = 5;
 Kyoda.DIR = {
 	LEFT: -1,
-	RIGHT: 1,
-	STILL: 0
+	RIGHT: 1
 };
