@@ -7,7 +7,7 @@ var GameLayer = cc.LayerColor.extend({
         this.floor1.setAnchorPoint(0.5,0);
         this.floor1.setPosition( new cc.Point(650,140));
 
-        this.kyoda = new Kyoda(750,140);
+        this.kyoda = new Kyoda(750,ground_floor1);
         this.kyoda.setAnchorPoint(0.5,0);
         this.kyoda.scheduleUpdate();
 
@@ -19,6 +19,7 @@ var GameLayer = cc.LayerColor.extend({
 
         this.scheduleUpdate();
 
+        this.checkKey = 0;
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
@@ -29,15 +30,21 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     onKeyDown: function(e){
-        if( e == cc.KEY.left)
+        if( e == cc.KEY.left && this.checkKey==0 )
         {
             this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
             this.kyoda.flipCharacter(Kyoda.DIR.LEFT);
+            this.checkKey++;
         }
-        if( e == cc.KEY.right)
+        if( e == cc.KEY.right )
         {
             this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
             this.kyoda.flipCharacter(Kyoda.DIR.RIGHT);
+            this.checkKey++;
+        }
+        if( e == cc.KEY.space )
+        {   
+            this.kyoda.jump();
         }
     },
 
@@ -50,6 +57,7 @@ var GameLayer = cc.LayerColor.extend({
         {
             this.kyoda.setDirection( false, Kyoda.DIR.RIGHT );
         }
+        this.checkKey = 0;
 
         this.kyoda.setDirection( false, Kyoda.DIR.STILL );
     },

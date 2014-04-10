@@ -9,12 +9,19 @@ var Kyoda = cc.Sprite.extend({
 		this.direction = Kyoda.DIR.LEFT;
 		this.updatePosition();
 
+
+		this.checkGround();
 		this.checkBorderLeft();
 		this.checkBorderRight();
 
 		this.isLeft = false;
 		this.isRight = false;
+		this.isJump = false;
 		
+	},
+
+	checkGround: function(){
+		return this.y <= ground_floor1;
 	},
 
 	updatePosition: function(){
@@ -30,6 +37,16 @@ var Kyoda = cc.Sprite.extend({
 		{
 			this.setFlippedX(false);
 		}
+	},
+
+
+	jump: function(){
+		if(this.checkGround())
+		{
+			Kyoda.Vy = 7;
+			this.isJump = true;
+		}
+
 	},
 
 	setDirection: function( isMove, dir ){
@@ -56,21 +73,38 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	update: function( dt ){
+
 		if( this.isLeft && this.checkBorderLeft())
 		{
-			this.x -= Kyoda.MOVE_STEP;
+			this.x -= Kyoda.Vx;
 
 		}
 		if( this.isRight && this.checkBorderRight())
 		{
-			this.x += Kyoda.MOVE_STEP;	
+			this.x += Kyoda.Vx;	
 		}
+
+		if(this.y >= ground_floor1 + Kyoda.Max_Vy)
+		{
+			this.isJump = false;
+			Kyoda.Vy = -10;
+		}
+
+		if(!this.isJump && this.checkGround())
+		{
+			Kyoda.Vy = 0;
+		}
+		this.y += Kyoda.Vy;
+		
 		this.updatePosition();
 	}
 });
 
 
-Kyoda.MOVE_STEP = 6;
+Kyoda.Vx = 6;
+Kyoda.Vy = 0;
+Kyoda.Max_Vy = 100;
+Kyoda.g = 1;
 Kyoda.DIR = {
 	LEFT: -1,
 	RIGHT: 1
