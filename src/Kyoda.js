@@ -13,10 +13,12 @@ var Kyoda = cc.Sprite.extend({
 		this.checkGround();
 		this.checkBorderLeft();
 		this.checkBorderRight();
+		this.checkJumpTop();
 
 		this.isLeft = false;
 		this.isRight = false;
 		this.isJump = false;
+		this.isTop = false;
 		
 	},
 
@@ -43,7 +45,7 @@ var Kyoda = cc.Sprite.extend({
 	jump: function(){
 		if(this.checkGround())
 		{
-			Kyoda.Vy = 7;
+			Kyoda.Vy = Kyoda.accelJump;
 			this.isJump = true;
 		}
 
@@ -72,6 +74,10 @@ var Kyoda = cc.Sprite.extend({
 		return myPos.x <= borderRight;
 	},
 
+	checkJumpTop: function(){
+		return (this.y >= Kyoda.Max_Vy + ground_floor1);
+	},
+
 	update: function( dt ){
 
 		if( this.isLeft && this.checkBorderLeft())
@@ -84,16 +90,17 @@ var Kyoda = cc.Sprite.extend({
 			this.x += Kyoda.Vx;	
 		}
 
-		if(this.y >= ground_floor1 + Kyoda.Max_Vy)
+		if( this.isJump )
 		{
-			this.isJump = false;
-			Kyoda.Vy = -10;
+			Kyoda.Vy -= Kyoda.g;
 		}
 
-		if(!this.isJump && this.checkGround())
+		if( Kyoda.Vy<= 0 && this.checkGround())
 		{
+			this.isJump = false;
 			Kyoda.Vy = 0;
 		}
+
 		this.y += Kyoda.Vy;
 		
 		this.updatePosition();
@@ -101,10 +108,11 @@ var Kyoda = cc.Sprite.extend({
 });
 
 
+
+Kyoda.accelJump = 11;
 Kyoda.Vx = 6;
 Kyoda.Vy = 0;
-Kyoda.Max_Vy = 100;
-Kyoda.g = 1;
+Kyoda.g = 0.5;
 Kyoda.DIR = {
 	LEFT: -1,
 	RIGHT: 1
