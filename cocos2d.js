@@ -17,7 +17,8 @@
             'src/Background.js',
             'src/Kyoda.js',
             'src/Floor_1.js',
-            'src/Gum.js'    //add your own files in order here
+            'src/Gum.js',
+            'src/Zombie.js'    //add your own files in order here
         ]
     };
 

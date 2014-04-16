@@ -14,7 +14,10 @@ var GameLayer = cc.LayerColor.extend({
         this.gum = new Gum();
         this.gum.setAnchorPoint(0.5,0);
         this.gum.randomPosition();
-        this.gum.scheduleUpdate();
+
+        this.zombie = new Zombie();
+        this.zombie.setAnchorPoint(0.5,0)
+        this.zombie.randomPosition();
 
         this.scheduleUpdate();
 
@@ -22,9 +25,10 @@ var GameLayer = cc.LayerColor.extend({
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
+        this.addChild( this.zombie );
         this.addChild( this.gum );
         this.addChild( this.kyoda );
-                
+        
         return true;
     },
 
