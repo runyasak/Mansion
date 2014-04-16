@@ -77,6 +77,10 @@ var Kyoda = cc.Sprite.extend({
 	checkJumpTop: function(){
 		return (this.y >= Kyoda.Max_Vy + ground_floor1);
 	},
+	
+	remove: function(gameLayer){
+		gameLayer.removeChild(this);
+	},
 
 	update: function( dt ){
 

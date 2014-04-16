@@ -69,6 +69,9 @@ var GameLayer = cc.LayerColor.extend({
         if(this.gum.closeTo(this.kyoda)){
             this.gum.remove(this);
         }
+        if(this.zombie.closeTo(this.kyoda)){
+            this.kyoda.remove(this);
+        }
     }
 });
 
