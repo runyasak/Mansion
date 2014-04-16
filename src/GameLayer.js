@@ -16,14 +16,13 @@ var GameLayer = cc.LayerColor.extend({
         this.gum.randomPosition();
         this.gum.scheduleUpdate();
 
-
         this.scheduleUpdate();
 
         this.checkKey = 0;
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
-        this.addChild( this.gum);
+        this.addChild( this.gum );
         this.addChild( this.kyoda );
                 
         return true;
@@ -36,7 +35,7 @@ var GameLayer = cc.LayerColor.extend({
             this.kyoda.flipCharacter(Kyoda.DIR.LEFT);
             this.checkKey++;
         }
-        if( e == cc.KEY.right )
+        if( e == cc.KEY.right && this.checkKey==0 )
         {
             this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
             this.kyoda.flipCharacter(Kyoda.DIR.RIGHT);
@@ -64,7 +63,7 @@ var GameLayer = cc.LayerColor.extend({
 
     update: function(){
         if(this.gum.closeTo(this.kyoda)){
-            this.gum.randomPosition();
+            this.gum.remove(this);
         }
     }
 });

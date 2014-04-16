@@ -2,7 +2,7 @@ var Kyoda = cc.Sprite.extend({
 
 	ctor: function(x, y){
 		this._super();
-		this.initWithFile('images/kyoda.png');
+		this.initWithFile(s_Kyoda);
 
 		this.x = x;
 		this.y = y;

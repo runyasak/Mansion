@@ -1,13 +1,16 @@
 var Gum = cc.Sprite.extend({
 	ctor: function(){
 		this._super();
-		this.initWithFile('images/gum.png');
-		
+		this.initWithFile(s_Gum);
 	},
 
 	randomPosition: function(){
 		var newX = (Math.random()*650)+300;
 		this.setPosition(cc.p( newX, ground_floor1));
+	},
+
+	remove: function(gameLayer){
+		gameLayer.removeChild(this);
 	},
 
 	closeTo: function( obj ){

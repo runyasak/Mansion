@@ -13,6 +13,7 @@
         SingleEngineFile:'lib/Cocos2d-html5-v2.2.2.min.js',
         appFiles:[
             'src/GameLayer.js',
+            'src/resource.js',
             'src/Background.js',
             'src/Kyoda.js',
             'src/Floor_1.js',
