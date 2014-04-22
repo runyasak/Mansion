@@ -14,10 +14,6 @@ var GameLayer = cc.LayerColor.extend({
         this.gum = new Gum();
         this.gum.setAnchorPoint(0.5,0);
         this.gum.scheduleUpdate();
-        Gum.time++;
-        this.gum.schedule( 
-            function() { Gum.time++} ,1
-        );
 
         this.zombie = new Zombie();
         this.zombie.setAnchorPoint(0.5,0)
@@ -29,9 +25,9 @@ var GameLayer = cc.LayerColor.extend({
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
-        //this.addChild( this.zombie );
+        this.addChild( this.zombie );
         this.addChild( this.gum );
-        //this.addChild( this.kyoda );
+        this.addChild( this.kyoda );
         
         return true;
     },
@@ -70,12 +66,12 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update: function(){
-        // if(this.gum.closeTo(this.kyoda)){
-        //     this.gum.remove(this);
-        // }
-        // if(this.zombie.closeTo(this.kyoda)){
-        //     this.kyoda.remove(this);
-        // }
+        if(this.gum.closeTo(this.kyoda)){
+             this.gum.remove(this);
+         }
+        if(this.zombie.closeTo(this.kyoda)){
+             this.kyoda.remove(this);
+         }
     }
 });
 
