@@ -25,7 +25,7 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.background );
         this.addChild( this.floor1 );
         this.addChild( this.bin );
-        //this.addChild( this.zombie );
+        this.addChild( this.zombie );
         this.gumArr.forEach( function( b ) {this.addChild( b );}, this );
         this.addChild( this.kyoda );
         
@@ -88,9 +88,9 @@ var GameLayer = cc.LayerColor.extend({
              }}, 
                 this );
 
-            // if(this.zombie.closeTo(this.kyoda)){
-            //      this.kyoda.remove(this);
-            //  }
+            if(this.zombie.closeTo(this.kyoda)){
+                 this.kyoda.remove(this);
+             }
         }
     }
 });

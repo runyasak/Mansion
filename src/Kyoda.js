@@ -96,29 +96,31 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	update: function( dt ){
-
-		if( this.isLeft && this.checkBorderLeft())
+		if(!this.isHide)
 		{
-			this.x -= Kyoda.Vx;
+			if( this.isLeft && this.checkBorderLeft())
+			{
+				this.x -= Kyoda.Vx;
 
-		}
-		if( this.isRight && this.checkBorderRight())
-		{
-			this.x += Kyoda.Vx;	
-		}
+			}
+			if( this.isRight && this.checkBorderRight())
+			{
+				this.x += Kyoda.Vx;	
+			}
 
-		if( this.isJump )
-		{
-			Kyoda.Vy -= Kyoda.g;
-		}
+			if( this.isJump )
+			{
+				Kyoda.Vy -= Kyoda.g;
+			}
 
-		if( Kyoda.Vy<= 0 && this.checkGround())
-		{
-			this.isJump = false;
-			Kyoda.Vy = 0;
-		}
+			if( Kyoda.Vy<= 0 && this.checkGround())
+			{
+				this.isJump = false;
+				Kyoda.Vy = 0;
+			}
 
-		this.y += Kyoda.Vy;
+			this.y += Kyoda.Vy;
+		}
 		this.flipCharacter();
 		this.updatePosition();
 	}
