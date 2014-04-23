@@ -2,7 +2,7 @@ var Zombie = cc.Sprite.extend({
 	ctor: function(){
 		this._super();
 		this.initWithFile(s_Zombie);
-		this.randomPosition();
+		//this.randomPosition();
 		this.x = this.getPosition().x;
 		this.y = this.getPosition().y;
 
@@ -34,8 +34,9 @@ var Zombie = cc.Sprite.extend({
 	closeTo: function( obj ){
 		var myPos = this.getPosition();
 		var oPos = obj.getPosition();
-		return ((Math.abs(myPos.x - oPos.x))<=70 && Math.abs(myPos.y - oPos.y)<=100);
+		return ((Math.abs(myPos.x - oPos.x))<=70 && Math.abs(myPos.y - oPos.y)<=110);
 	},
+
 
 	checkBorderLeft: function(){
 		var myPos = this.getPosition();

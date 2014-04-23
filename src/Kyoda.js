@@ -19,6 +19,7 @@ var Kyoda = cc.Sprite.extend({
 		this.isRight = false;
 		this.isJump = false;
 		this.isTop = false;
+		this.isHide = false;
 		
 	},
 
@@ -76,6 +77,18 @@ var Kyoda = cc.Sprite.extend({
 
 	checkJumpTop: function(){
 		return (this.y >= Kyoda.Max_Vy + ground_floor1);
+	},
+
+	hide: function(){
+		if(!this.isHide)
+		{
+			this.setVisible(false);
+			this.isHide = true;
+		}
+		else{
+			this.setVisible(true);
+			this.isHide = false;
+		}
 	},
 	
 	remove: function(){

@@ -20,12 +20,12 @@ var GameLayer = cc.LayerColor.extend({
        for(var i = 0; i < 6; i++){
             this.gumArr.push(new Gum());
         }
-
-        this.checkKey = 0;
+        this.bin = new Bin();
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
-        this.addChild( this.zombie );
+        this.addChild( this.bin );
+        //this.addChild( this.zombie );
         this.gumArr.forEach( function( b ) {this.addChild( b );}, this );
         this.addChild( this.kyoda );
         
@@ -33,46 +33,65 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     onKeyDown: function(e){
-        if( e == cc.KEY.left )
+        if(!this.kyoda.isHide)
         {
-            this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
-        }
-        else if( e == cc.KEY.right )
-        {
-            this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
-        }
+            if( e == cc.KEY.left )
+            {
+                this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
+            }
+            else if( e == cc.KEY.right )
+            {
+                this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
+            }
 
-        if( e == cc.KEY.space )
-        {   
-            this.kyoda.jump();
+            if( e == cc.KEY.up )
+            {   
+                this.kyoda.jump();
+            }
+
+        }
+        if( e == cc.KEY.space && this.bin.closeTo(this.kyoda) )
+        {
+                this.kyoda.hide();
         }
     },
 
     onKeyUp: function(e){
-        if( e == cc.KEY.left)
+
+        if(!this.kyoda.isHide)
         {
-            this.kyoda.setDirection( false, Kyoda.DIR.LEFT );
+            if( e == cc.KEY.left)
+            {
+                this.kyoda.setDirection( false, Kyoda.DIR.LEFT );
+            }
+            if( e == cc.KEY.right)
+            {
+                this.kyoda.setDirection( false, Kyoda.DIR.RIGHT );
+            }
+            if( e == cc.KEY.up )
+                {   
+                    this.kyoda.jump();
+                }
+
         }
-        if( e == cc.KEY.right)
-        {
-            this.kyoda.setDirection( false, Kyoda.DIR.RIGHT );
-        }
-        this.checkKey = 0;
 
         this.kyoda.setDirection( false, Kyoda.DIR.STILL );
     },
 
     update: function(){
-        this.gumArr.forEach( 
-            function( b ) {
-        if(b.closeTo(this.kyoda)){
-             b.remove();
-         }}, 
-            this );
+        if(!this.kyoda.isHide)
+        {
+            this.gumArr.forEach( 
+                function( b ) {
+            if(b.closeTo(this.kyoda)){
+                 b.remove();
+             }}, 
+                this );
 
-        if(this.zombie.closeTo(this.kyoda)){
-             this.kyoda.remove(this);
-         }
+            // if(this.zombie.closeTo(this.kyoda)){
+            //      this.kyoda.remove(this);
+            //  }
+        }
     }
 });
 
