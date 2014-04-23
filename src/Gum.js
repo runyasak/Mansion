@@ -6,12 +6,12 @@ var Gum = cc.Sprite.extend({
 		this.x = this.getPosition().x;
 		this.y = this.getPosition().y;
 
-		this.dir = 1;
+		this.dir = Gum.DIR.Still;
 		this.schedule(
 			function(){this.autoMove();},1
 			);
-		this.time = 1;
-		this.timeTrack();
+		this.setAnchorPoint(0.5,0);
+		this.scheduleUpdate();
 	},
 
 	randomPosition: function(){
@@ -19,8 +19,8 @@ var Gum = cc.Sprite.extend({
 		this.setPosition(cc.p( newX, ground_floor1));
 	},
 
-	remove: function(gameLayer){
-		gameLayer.removeChild(this);
+	remove: function(){
+		this.removeFromParent( true );
 	},
 
 	closeTo: function( obj ){
@@ -43,12 +43,6 @@ var Gum = cc.Sprite.extend({
 		this.setPosition(cc.p(this.x, this.y));
 	},
 
-	timeTrack: function(){
-		this.schedule(
-			function() { this.time++} ,1);
-	},
-
-
 	autoMove: function(){
 		this.dir = Math.floor((Math.random()*3)-1);
 	},
@@ -56,9 +50,16 @@ var Gum = cc.Sprite.extend({
 	update: function( dt ){
 		if(this.checkBorderLeft() && this.checkBorderRight())
 		{
-			this.x += 3*this.dir;
+			this.x += Gum.Vx*this.dir;
 		}
 		
 		this.updatePosition();
 	}
 });
+
+Gum.Vx = 3;
+Gum.DIR ={
+	Left: -1,
+	Right: 1,
+	Still: 0
+};

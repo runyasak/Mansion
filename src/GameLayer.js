@@ -11,40 +11,37 @@ var GameLayer = cc.LayerColor.extend({
         this.kyoda.setAnchorPoint(0.5,0);
         this.kyoda.scheduleUpdate();
 
-        this.gum = new Gum();
-        this.gum.setAnchorPoint(0.5,0);
-        this.gum.scheduleUpdate();
+        this.gumArr = [];
 
         this.zombie = new Zombie();
-        this.zombie.setAnchorPoint(0.5,0)
-        this.zombie.randomPosition();
 
         this.scheduleUpdate();
+
+       for(var i = 0; i < 6; i++){
+            this.gumArr.push(new Gum());
+        }
 
         this.checkKey = 0;
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
         this.addChild( this.zombie );
-        this.addChild( this.gum );
+        this.gumArr.forEach( function( b ) {this.addChild( b );}, this );
         this.addChild( this.kyoda );
         
         return true;
     },
 
     onKeyDown: function(e){
-        if( e == cc.KEY.left && this.checkKey==0 )
+        if( e == cc.KEY.left )
         {
             this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
-            this.kyoda.flipCharacter(Kyoda.DIR.LEFT);
-            this.checkKey++;
         }
-        if( e == cc.KEY.right && this.checkKey==0 )
+        else if( e == cc.KEY.right )
         {
             this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
-            this.kyoda.flipCharacter(Kyoda.DIR.RIGHT);
-            this.checkKey++;
         }
+
         if( e == cc.KEY.space )
         {   
             this.kyoda.jump();
@@ -66,9 +63,13 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update: function(){
-        if(this.gum.closeTo(this.kyoda)){
-             this.gum.remove(this);
-         }
+        this.gumArr.forEach( 
+            function( b ) {
+        if(b.closeTo(this.kyoda)){
+             b.remove();
+         }}, 
+            this );
+
         if(this.zombie.closeTo(this.kyoda)){
              this.kyoda.remove(this);
          }

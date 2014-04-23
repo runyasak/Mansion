@@ -31,11 +31,11 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	flipCharacter: function(dir){
-		if(this.direction == Kyoda.DIR.RIGHT)
+		if(this.isRight)
 		{	
 			this.setFlippedX(true);
 		}
-		if(this.direction == Kyoda.DIR.LEFT)
+		if(this.isLeft)
 		{
 			this.setFlippedX(false);
 		}
@@ -78,8 +78,8 @@ var Kyoda = cc.Sprite.extend({
 		return (this.y >= Kyoda.Max_Vy + ground_floor1);
 	},
 	
-	remove: function(gameLayer){
-		gameLayer.removeChild(this);
+	remove: function(){
+		this.removeFromParent( true );
 	},
 
 	update: function( dt ){
@@ -106,7 +106,7 @@ var Kyoda = cc.Sprite.extend({
 		}
 
 		this.y += Kyoda.Vy;
-		
+		this.flipCharacter();
 		this.updatePosition();
 	}
 });
