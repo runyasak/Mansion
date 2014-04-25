@@ -5,6 +5,7 @@ var s_Gum = "res/images/gum.png";
 var s_Kyoda = "res/images/kyoda.png";
 var s_Zombie = "res/images/zombie.png";
 var s_Bin = "res/images/bin.png";
+var s_Bin2 = "res/images/bin2.png";
 
 var g_resources = [
     //image
@@ -13,7 +14,8 @@ var g_resources = [
     {src:s_Gum},
     {src:s_Kyoda},
     {src:s_Zombie},
-    {src:s_Bin}
+    {src:s_Bin},
+    {src:s_Bin2}
  
     //plist
  

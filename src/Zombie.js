@@ -34,7 +34,7 @@ var Zombie = cc.Sprite.extend({
 	closeTo: function( obj ){
 		var myPos = this.getPosition();
 		var oPos = obj.getPosition();
-		return ((Math.abs(myPos.x - oPos.x))<=70 && Math.abs(myPos.y - oPos.y)<=110);
+		return ((Math.abs(myPos.x - oPos.x))<=60 && Math.abs(myPos.y - oPos.y)<=120);
 	},
 
 

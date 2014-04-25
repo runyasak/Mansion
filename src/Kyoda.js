@@ -19,7 +19,6 @@ var Kyoda = cc.Sprite.extend({
 		this.isRight = false;
 		this.isJump = false;
 		this.isTop = false;
-		this.isHide = false;
 		
 	},
 
@@ -80,14 +79,16 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	hide: function(){
-		if(!this.isHide)
+		if(!Kyoda.isHide)
 		{
 			this.setVisible(false);
-			this.isHide = true;
+			Kyoda.isHide = true;
+			this.isLeft = false;
+			this.isRight = false;
 		}
 		else{
 			this.setVisible(true);
-			this.isHide = false;
+			Kyoda.isHide = false;
 		}
 	},
 	
@@ -96,7 +97,7 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	update: function( dt ){
-		if(!this.isHide)
+		if(!Kyoda.isHide)
 		{
 			if( this.isLeft && this.checkBorderLeft())
 			{
@@ -136,3 +137,4 @@ Kyoda.DIR = {
 	LEFT: -1,
 	RIGHT: 1
 };
+Kyoda.isHide = false;

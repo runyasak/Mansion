@@ -11,49 +11,52 @@ var GameLayer = cc.LayerColor.extend({
         this.kyoda.setAnchorPoint(0.5,0);
         this.kyoda.scheduleUpdate();
 
-        this.gumArr = [];
-
         this.zombie = new Zombie();
 
         this.scheduleUpdate();
 
-       for(var i = 0; i < 6; i++){
-            this.gumArr.push(new Gum());
-        }
+       
         this.bin = new Bin();
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
         this.addChild( this.bin );
         this.addChild( this.zombie );
-        this.gumArr.forEach( function( b ) {this.addChild( b );}, this );
         this.addChild( this.kyoda );
+        this.addMonsters();
         
         return true;
     },
 
     onKeyDown: function(e){
-        if(!this.kyoda.isHide)
+        if( e == cc.KEY.left )
         {
-            if( e == cc.KEY.left )
-            {
-                this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
-            }
-            else if( e == cc.KEY.right )
-            {
-                this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
-            }
-
-            if( e == cc.KEY.up )
-            {   
-                this.kyoda.jump();
-            }
-
+            this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
         }
+        else if( e == cc.KEY.right )
+        {
+            this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
+        }
+
+        if( e == cc.KEY.up )
+        {   
+            this.kyoda.jump();
+        }
+
         if( e == cc.KEY.space && this.bin.closeTo(this.kyoda) )
         {
-                this.kyoda.hide();
+            this.kyoda.hide();
+            this.bin.changeSprite();
+
         }
+    },
+
+    addMonsters: function(e){
+        this.gumArr = [];
+        for(var i = 0; i < 6; i++){
+            this.gumArr.push(new Gum());
+        }
+        this.gumArr.forEach( function( b ) {this.addChild( b );}, this );
     },
 
     onKeyUp: function(e){
@@ -69,10 +72,9 @@ var GameLayer = cc.LayerColor.extend({
                 this.kyoda.setDirection( false, Kyoda.DIR.RIGHT );
             }
             if( e == cc.KEY.up )
-                {   
-                    this.kyoda.jump();
-                }
-
+            {   
+                this.kyoda.jump();
+            }
         }
 
         this.kyoda.setDirection( false, Kyoda.DIR.STILL );
