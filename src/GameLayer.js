@@ -14,7 +14,6 @@ var GameLayer = cc.LayerColor.extend({
         this.zombie = new Zombie();
 
         this.scheduleUpdate();
-
        
         this.bin = new Bin();
         this.setKeyboardEnabled(true);
@@ -29,25 +28,38 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     onKeyDown: function(e){
-        if( e == cc.KEY.left )
-        {
-            this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
-        }
-        else if( e == cc.KEY.right )
-        {
-            this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
-        }
+        console.log(!Kyoda.isHide);
+        if(!Kyoda.isHide)
+        {    
+            if( e == cc.KEY.left )
+            {
+                this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
+            }
+            else if( e == cc.KEY.right )
+            {
+                this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
+            }
 
-        if( e == cc.KEY.up )
-        {   
-            this.kyoda.jump();
+            if( e == cc.KEY.up )
+            {   
+                this.kyoda.jump();
+            }
+            if( e == cc.KEY.space && this.bin.closeTo(this.kyoda) )
+            {
+                this.kyoda.hide();
+                this.bin.changeSprite();
+            }
         }
-
-        if( e == cc.KEY.space && this.bin.closeTo(this.kyoda) )
+        if(Kyoda.isHide)
         {
-            this.kyoda.hide();
-            this.bin.changeSprite();
-
+            if( e == cc.KEY.left)
+            {
+                this.bin.setDirection( true, Bin.DIR.LEFT );
+            }
+            if( e == cc.KEY.right)
+            {
+                this.bin.setDirection( true, Bin.DIR.RIGHT );
+            }
         }
     },
 
@@ -61,7 +73,7 @@ var GameLayer = cc.LayerColor.extend({
 
     onKeyUp: function(e){
 
-        if(!this.kyoda.isHide)
+        if(!Kyoda.isHide)
         {
             if( e == cc.KEY.left)
             {
@@ -76,12 +88,22 @@ var GameLayer = cc.LayerColor.extend({
                 this.kyoda.jump();
             }
         }
-
+        if(Kyoda.isHide)
+        {
+            if( e == cc.KEY.left)
+            {
+                this.bin.setDirection( false, Bin.DIR.LEFT );
+            }
+            if( e == cc.KEY.right)
+            {
+                this.bin.setDirection( false, Bin.DIR.RIGHT );
+            }
+        }
         this.kyoda.setDirection( false, Kyoda.DIR.STILL );
     },
 
     update: function(){
-        if(!this.kyoda.isHide)
+        if(!Kyoda.isHide)
         {
             this.gumArr.forEach( 
                 function( b ) {
