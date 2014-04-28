@@ -28,7 +28,6 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     onKeyDown: function(e){
-        console.log(!Kyoda.isHide);
         if(!Kyoda.isHide)
         {    
             if( e == cc.KEY.left )
@@ -39,9 +38,9 @@ var GameLayer = cc.LayerColor.extend({
             {
                 this.kyoda.setDirection( true, Kyoda.DIR.RIGHT );
             }
-
+ 
             if( e == cc.KEY.up )
-            {   
+            {  
                 this.kyoda.jump();
             }
             if( e == cc.KEY.space && this.bin.closeTo(this.kyoda) )
@@ -49,16 +48,11 @@ var GameLayer = cc.LayerColor.extend({
                 this.kyoda.hide();
                 this.bin.changeSprite();
             }
-        }
-        if(Kyoda.isHide)
-        {
-            if( e == cc.KEY.left)
-            {
-                this.bin.setDirection( true, Bin.DIR.LEFT );
-            }
-            if( e == cc.KEY.right)
-            {
-                this.bin.setDirection( true, Bin.DIR.RIGHT );
+        }else{
+            switch(e){
+                case cc.KEY.left: this.bin.setDirection( true, Bin.DIR.LEFT );  break;
+                case cc.KEY.right: this.bin.setDirection( true, Bin.DIR.RIGHT ); break;
+                case cc.KEY.space: this.bin.isLeft = false; this.bin.isRight = false; this.kyoda.x = this.bin.x; this.kyoda.hide(); this.bin.changeSprite(); break;
             }
         }
     },
