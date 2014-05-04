@@ -7,8 +7,10 @@ var Zombie = cc.Sprite.extend({
 		this.y = this.getPosition().y;
 
 		this.dir = Zombie.DIR.Still;
+
+		var self = this;
 		this.schedule(
-			function(){this.autoMove();},1
+			function(){self.autoMove();},1
 			);
 
 		this.setAnchorPoint(0.5,0);

@@ -8,8 +8,6 @@ var GameLayer = cc.LayerColor.extend({
         this.floor1.setPosition( new cc.Point(650,140));
 
         this.kyoda = new Kyoda(750,ground_floor1);
-        this.kyoda.setAnchorPoint(0.5,0);
-        this.kyoda.scheduleUpdate();
 
         this.zombie = new Zombie();
 

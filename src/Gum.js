@@ -8,7 +8,12 @@ var Gum = cc.Sprite.extend({
 
 		this.dir = Gum.DIR.Still;
 		this.setAnchorPoint(0.5,0);
-		this.autoMove();
+
+		var self = this;
+		this.schedule(
+			function() { self.autoMove(); },1
+		);
+		//this.autoMove();
 		this.scheduleUpdate();
 	},
 
@@ -43,9 +48,7 @@ var Gum = cc.Sprite.extend({
 
 	autoMove: function(){
 		this.dir = Math.floor((Math.random()*3)-1);
-		this.schedule(
-			function(){this.autoMove();},1
-			);
+
 	},
 
 	update: function( dt ){

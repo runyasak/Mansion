@@ -3,12 +3,13 @@ var Kyoda = cc.Sprite.extend({
 	ctor: function(x, y){
 		this._super();
 		this.initWithFile(s_Kyoda);
+		this.setAnchorPoint(0.5,0);
 
 		this.x = x;
 		this.y = y;
 		this.direction = Kyoda.DIR.LEFT;
 		this.updatePosition();
-
+		this.scheduleUpdate();
 
 		this.checkGround();
 		this.checkBorderLeft();
@@ -19,7 +20,6 @@ var Kyoda = cc.Sprite.extend({
 		this.isRight = false;
 		this.isJump = false;
 		this.isTop = false;
-		
 	},
 
 	checkGround: function(){
@@ -93,6 +93,7 @@ var Kyoda = cc.Sprite.extend({
 	},
 	
 	remove: function(){
+		this.setPosition(0,0);
 		this.removeFromParent( true );
 	},
 
