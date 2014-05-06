@@ -13,13 +13,12 @@ var Gum = cc.Sprite.extend({
 		this.schedule(
 			function() { self.autoMove(); },1
 		);
-		//this.autoMove();
 		this.scheduleUpdate();
 	},
 
 	randomPosition: function(){
 		var newX = (Math.random()*650)+300;
-		this.setPosition(cc.p( newX, ground_floor1));
+		this.setPosition(cc.p( newX, 137));
 	},
 
 	remove: function(){
@@ -48,12 +47,10 @@ var Gum = cc.Sprite.extend({
 
 	autoMove: function(){
 		this.dir = Math.floor((Math.random()*3)-1);
-
 	},
 
 	update: function( dt ){
-		if(this.checkBorderLeft() && this.checkBorderRight())
-		{
+		if(this.checkBorderLeft() && this.checkBorderRight()){
 			this.x += Gum.Vx*this.dir;
 		}
 		

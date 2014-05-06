@@ -23,12 +23,10 @@ var Zombie = cc.Sprite.extend({
 	},
 
 	flipCharacter: function(dir){
-		if(dir == Zombie.DIR.Right)
-		{	
+		if(dir == Zombie.DIR.Right){	
 			this.setFlippedX(false);
 		}
-		if(dir == Zombie.DIR.Left)
-		{
+		if(dir == Zombie.DIR.Left){
 			this.setFlippedX(true);
 		}
 	},
@@ -59,8 +57,7 @@ var Zombie = cc.Sprite.extend({
 	},
 
 	update: function( dt ){
-		if(this.checkBorderLeft() && this.checkBorderRight())
-		{
+		if(this.checkBorderLeft() && this.checkBorderRight()){
 			this.x += Zombie.Vx*this.dir;
 		}
 		this.flipCharacter(this.dir);

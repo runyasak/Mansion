@@ -3,23 +3,17 @@ var Kyoda = cc.Sprite.extend({
 	ctor: function(x, y){
 		this._super();
 		this.initWithFile(s_Kyoda);
-		this.setAnchorPoint(0.5,0);
 
 		this.x = x;
 		this.y = y;
 		this.direction = Kyoda.DIR.LEFT;
 		this.updatePosition();
-		this.scheduleUpdate();
-
-		this.checkGround();
-		this.checkBorderLeft();
-		this.checkBorderRight();
-		this.checkJumpTop();
 
 		this.isLeft = false;
 		this.isRight = false;
 		this.isJump = false;
 		this.isTop = false;
+
 	},
 
 	checkGround: function(){
@@ -31,20 +25,17 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	flipCharacter: function(dir){
-		if(this.isRight)
-		{	
+		if(this.isRight){	
 			this.setFlippedX(true);
 		}
-		if(this.isLeft)
-		{
+		if(this.isLeft){
 			this.setFlippedX(false);
 		}
 	},
 
 
 	jump: function(){
-		if(this.checkGround())
-		{
+		if(this.checkGround()){
 			Kyoda.Vy = Kyoda.accelJump;
 			this.isJump = true;
 		}
@@ -52,13 +43,11 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	setDirection: function( isMove, dir ){
-		if(dir == Kyoda.DIR.LEFT)
-		{
+		if(dir == Kyoda.DIR.LEFT){
 			this.isLeft = isMove;			
 			this.direction = dir;
 		}
-		if(dir == Kyoda.DIR.RIGHT)
-		{
+		if(dir == Kyoda.DIR.RIGHT){
 			this.isRight = isMove;
 			this.direction = dir;
 		}
@@ -78,45 +67,38 @@ var Kyoda = cc.Sprite.extend({
 		return (this.y >= Kyoda.Max_Vy + ground_floor1);
 	},
 
-	hide: function(){
-		if(!Kyoda.isHide)
-		{
+	hide: function(bin){
+		if(!Kyoda.isHide && bin.closeTo(this)){
 			this.setVisible(false);
 			Kyoda.isHide = true;
 			this.isLeft = false;
 			this.isRight = false;
+			bin.changeSprite();
 		}
 		else{
 			this.setVisible(true);
 			Kyoda.isHide = false;
 		}
 	},
-	
+
 	remove: function(){
-		this.setPosition(0,0);
 		this.removeFromParent( true );
 	},
 
 	update: function( dt ){
-		if(!Kyoda.isHide)
-		{
-			if( this.isLeft && this.checkBorderLeft())
-			{
+		if(!Kyoda.isHide){
+			if( this.isLeft && this.checkBorderLeft()){
 				this.x -= Kyoda.Vx;
-
 			}
-			if( this.isRight && this.checkBorderRight())
-			{
+			if( this.isRight && this.checkBorderRight()){
 				this.x += Kyoda.Vx;	
 			}
-
-			if( this.isJump )
-			{
+			if( this.isJump ){
+			
 				Kyoda.Vy -= Kyoda.g;
 			}
 
-			if( Kyoda.Vy<= 0 && this.checkGround())
-			{
+			if( Kyoda.Vy<= 0 && this.checkGround()){
 				this.isJump = false;
 				Kyoda.Vy = 0;
 			}
