@@ -15,7 +15,6 @@ var Kyoda = cc.Sprite.extend({
 		this.isTop = false;
 
 		this.isDie = false;
-
 	},
 
 	checkGround: function(){

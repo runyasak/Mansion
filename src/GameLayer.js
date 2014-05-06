@@ -16,26 +16,27 @@ var GameLayer = cc.LayerColor.extend({
         this.gumArr = [];
         this.zombieArr = [];
 
-        this.scheduleUpdate();
+        this.unitSchedule();
 
-        this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 40 );
-        this.scoreLabel.setPosition( new cc.Point( 620, 550 ) );
-        
-        this.schedule(
-            function() { this.addGums(); }, 3
-        );
-        this.schedule(
-            function() { this.addZombies(); }, 15
-        );
         this.bin = new Bin();
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
         this.addChild( this.bin );
         this.addChild( this.kyoda );
-        this.addChild( this.scoreLabel );
+        this.scoreBoard();
+        this.scheduleUpdate();
         
         return true;
+    },
+
+    unitSchedule: function(){
+        this.schedule(
+            function() { this.addGums(); }, 3
+        );
+        this.schedule(
+            function() { this.addZombies(); }, 15
+        );
     },
 
     addZombies: function(){
@@ -51,6 +52,17 @@ var GameLayer = cc.LayerColor.extend({
             this.addChild(newGum);
             this.gumArr.push(newGum);
         }
+    },
+
+    scoreBoard: function(){
+        this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 40 );
+        this.scoreLabel.setPosition( new cc.Point( 620, 550 ) );
+        this.addChild( this.scoreLabel );
+    },
+
+    addScore: function(){
+        this.score += 10;
+        this.scoreLabel.setString( this.score );
     },
 
     onKeyDown: function(e){
@@ -111,11 +123,6 @@ var GameLayer = cc.LayerColor.extend({
             }
         }
         this.kyoda.setDirection( false, Kyoda.DIR.STILL );
-    },
-
-    addScore: function(){
-        this.score += 10;
-        this.scoreLabel.setString( this.score );
     },
 
     update: function(){

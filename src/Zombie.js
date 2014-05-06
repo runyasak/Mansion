@@ -1,27 +1,42 @@
 var Zombie = cc.Sprite.extend({
 	ctor: function(){
 		this._super();
-		this.initWithFile(s_Zombie);
+		this.initWithFile(s_SkullSign);
 		this.randomPosition();
 		this.x = this.getPosition().x;
 		this.y = this.getPosition().y;
 
 		this.dir = Zombie.DIR.Still;
 
-		var self = this;
-		this.schedule(
-			function(){self.autoMove();},1
-			);
-
+		this.inGame = false;
+		this.zombieBorn();
+		this.moveSchedule();
 		this.setAnchorPoint(0.5,0);
 		this.scheduleUpdate();
 	},
 
+	timeTrack: function(){
+		this.schedule(
+			function(){ this.time++;},1
+			);
+	},
 	randomPosition: function(){
 		var newX = (Math.random()*650)+300;
 		this.setPosition(cc.p( newX, ground_floor1));
 	},
 
+	zombieBorn: function(){
+		var time = 0;
+		this.schedule(
+			function(){
+				if(time == 2){
+					this.initWithFile(s_Zombie);
+					this.setAnchorPoint(0.5, 0);
+					this.inGame = true;
+				}
+				time++; },1
+			);
+	},
 	flipCharacter: function(dir){
 		if(dir == Zombie.DIR.Right){	
 			this.setFlippedX(false);
@@ -32,12 +47,23 @@ var Zombie = cc.Sprite.extend({
 	},
 
 	closeTo: function( obj ){
-		var myPos = this.getPosition();
-		var oPos = obj.getPosition();
-		return ((Math.abs(myPos.x - oPos.x))<=60 && Math.abs(myPos.y - oPos.y)<=120);
+		if(this.inGame)
+		{
+			var myPos = this.getPosition();
+			var oPos = obj.getPosition();
+			return ((Math.abs(myPos.x - oPos.x))<=60 && Math.abs(myPos.y - oPos.y)<=120);
+		}
 	},
 
-
+	moveSchedule: function(){
+			var self = this;
+			this.schedule(
+				function(){
+					if(this.inGame){
+						self.autoMove();
+					}},1
+				);
+	},
 	checkBorderLeft: function(){
 		var myPos = this.getPosition();
 		return (myPos.x >= borderLeft) || (this.dir>=0);
