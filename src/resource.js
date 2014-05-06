@@ -7,7 +7,7 @@ var s_Zombie = "res/images/zombie.png";
 var s_Bin = "res/images/bin.png";
 var s_Bin2 = "res/images/bin2.png";
 var s_SkullSign = "res/images/skullsign.png";
-
+var s_Ghost = "res/images/ghost.png";
 
 var g_resources = [
     //image
@@ -18,7 +18,8 @@ var g_resources = [
     {src:s_Zombie},
     {src:s_Bin},
     {src:s_Bin2},
-    {src:s_SkullSign}
+    {src:s_SkullSign},
+    {src:s_Ghost}
  
     //plist
  
