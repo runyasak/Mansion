@@ -14,35 +14,43 @@ var GameLayer = cc.LayerColor.extend({
         this.score = 0;
 
         this.gumArr = [];
+        this.zombieArr = [];
 
-        //this.zombie = new Zombie();
         this.scheduleUpdate();
 
         this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 40 );
         this.scoreLabel.setPosition( new cc.Point( 620, 550 ) );
         
         this.schedule(
-            function() { this.addMonsters(); },1
+            function() { this.addGums(); }, 3
+        );
+        this.schedule(
+            function() { this.addZombies(); }, 15
         );
         this.bin = new Bin();
         this.setKeyboardEnabled(true);
         this.addChild( this.background );
         this.addChild( this.floor1 );
         this.addChild( this.bin );
-        //this.addChild( this.zombie );
         this.addChild( this.kyoda );
-        this.addMonsters();
         this.addChild( this.scoreLabel );
         
         return true;
     },
 
-    addMonsters: function(){
+    addZombies: function(){
+        var newZombie = new Zombie();
+        this.addChild(newZombie);
+        this.zombieArr.push(newZombie);
+    },
+
+    addGums: function(){
         var noMonster = Math.floor(Math.random()*7+2);
         for(var i = 0; i < noMonster; i++){
-            this.gumArr.push(new Gum());
+            var newGum = new Gum();
+            this.addChild(newGum);
+            this.gumArr.push(newGum);
         }
-        this.gumArr.forEach( function( b ) {this.addChild( b );}, this );
     },
 
     onKeyDown: function(e){
@@ -111,17 +119,19 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update: function(){
-        if(!Kyoda.isHide){
+        if(!Kyoda.isHide && !this.kyoda.isDie){
             this.gumArr.forEach( 
                 function( b ) {
-            if(b.closeTo(this.kyoda)){
-                b.setPosition(cc.p(0, 0)) 
-                b.remove(); 
-                this.addScore();}}, this );
+                    if(b.closeTo(this.kyoda)){
+                        b.remove(); 
+                        this.addScore();
+                    }}, this );
 
-            // if(this.zombie.closeTo(this.kyoda)){
-            //      this.kyoda.remove(this);
-            //  }
+            this.zombieArr.forEach(
+                function( b ) {
+                    if(b.closeTo(this.kyoda)){
+                        this.kyoda.remove();
+                    }}, this);
         }
     }
 });

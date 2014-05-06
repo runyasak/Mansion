@@ -14,6 +14,8 @@ var Kyoda = cc.Sprite.extend({
 		this.isJump = false;
 		this.isTop = false;
 
+		this.isDie = false;
+
 	},
 
 	checkGround: function(){
@@ -83,6 +85,7 @@ var Kyoda = cc.Sprite.extend({
 
 	remove: function(){
 		this.removeFromParent( true );
+		this.isDie = true;
 	},
 
 	update: function( dt ){

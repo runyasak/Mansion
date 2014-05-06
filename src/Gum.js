@@ -23,6 +23,7 @@ var Gum = cc.Sprite.extend({
 
 	remove: function(){
 		this.removeFromParent( true );
+		this.setPosition(cc.p(0,0));
 	},
 
 	closeTo: function( obj ){
