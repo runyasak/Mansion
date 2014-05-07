@@ -19,7 +19,8 @@
             'src/Floor_1.js',
             'src/Gum.js',
             'src/Zombie.js',
-            'src/Bin.js'    //add your own files in order here
+            'src/Bin.js',
+            'src/Ghost.js'    //add your own files in order here
         ]
     };
 

@@ -15,9 +15,12 @@ var GameLayer = cc.LayerColor.extend({
         this.no_gum = 0;
         this.no_zombie = 0;
 
+        this.ghost = new Ghost();
+
 
         this.gumArr = [];
         this.zombieArr = [];
+        this.ghostArr = [];
 
         this.unitSchedule();
 
@@ -26,7 +29,8 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.background );
         this.addChild( this.floor1 );
         this.addChild( this.bin );
-        this.addChild( this.kyoda );
+        this.addChild( this.kyoda ,100);
+        this.addChild( this.ghost);
         this.scoreBoard();
         this.scheduleUpdate();
     
@@ -34,16 +38,16 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     unitSchedule: function(){
-        this.schedule(
-            function() {
-                if(this.no_gum < GameLayer.MAX.Gum){
-                    this.addGums();}
-                }, 3 );
-        this.schedule(
-            function() {
-                if(this.no_zombie < GameLayer.MAX.Zombie){
-                    this.addZombies();}
-                }, 15 );
+        // this.schedule(
+        //     function() {
+        //         if(this.no_gum < GameLayer.MAX.Gum){
+        //             this.addGums();}
+        //         }, 3 );
+        // this.schedule(
+        //     function() {
+        //         if(this.no_zombie < GameLayer.MAX.Zombie){
+        //             this.addZombies();}
+        //         }, 15 );
     },
 
     addZombies: function(){
