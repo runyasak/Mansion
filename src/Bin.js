@@ -14,6 +14,7 @@ var Bin = cc.Sprite.extend({
 		this.y = this.getPosition().y;
 		this.isLeft = false;
 		this.isRight = false;
+		this.isFull = false;
 
 		this.direction = Bin.DIR.Still;
 
@@ -26,13 +27,11 @@ var Bin = cc.Sprite.extend({
 	},
 
 	setDirection: function( isMove, dir ){
-		if(dir == Bin.DIR.LEFT)
-		{
+		if(dir == Bin.DIR.LEFT){
 			this.isLeft = isMove;			
 			this.direction = dir;
 		}
-		if(dir == Bin.DIR.RIGHT)
-		{
+		if(dir == Bin.DIR.RIGHT){
 			this.isRight = isMove;
 			this.direction = dir;
 		}
@@ -49,15 +48,14 @@ var Bin = cc.Sprite.extend({
 	},
 
 	changeSprite: function(){
-		if(!Kyoda.isHide)
-		{
-			this.initWithFile(this.sprite1);
-			this.setAnchorPoint(0.5,0);
-		}
-		if(Kyoda.isHide)
-		{
+		if(!this.isFull){
 			this.initWithFile(this.sprite2);
+			this.setAnchorPoint(0.5,0);
+			this.isFull = true;
+		}else{
+			this.initWithFile(this.sprite1);
 			this.setAnchorPoint(0.5,0);	
+			this.isFull = false;
 		}
 	},
 	updatePosition: function(){
@@ -70,14 +68,11 @@ var Bin = cc.Sprite.extend({
 		return ((Math.abs(myPos.x - oPos.x))<=40 && Math.abs(myPos.y - oPos.y)<=20);
 	},
 
-	update: function(dt)
-	{
-		if( this.isLeft && this.checkBorderLeft())
-		{
+	update: function(dt){
+		if( this.isLeft && this.checkBorderLeft()){
 			this.x -= Bin.Vx;
 		}
-		if( this.isRight && this.checkBorderRight())
-		{
+		if( this.isRight && this.checkBorderRight()){
 			this.x += Bin.Vx;	
 		}
 

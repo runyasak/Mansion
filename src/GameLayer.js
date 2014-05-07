@@ -12,6 +12,9 @@ var GameLayer = cc.LayerColor.extend({
         this.kyoda.scheduleUpdate();
 
         this.score = 0;
+        this.no_gum = 0;
+        this.no_zombie = 0;
+
 
         this.gumArr = [];
         this.zombieArr = [];
@@ -26,23 +29,28 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.kyoda );
         this.scoreBoard();
         this.scheduleUpdate();
-        
+    
         return true;
     },
 
     unitSchedule: function(){
         this.schedule(
-            function() { this.addGums(); }, 3
-        );
+            function() {
+                if(this.no_gum < GameLayer.MAX.Gum){
+                    this.addGums();}
+                }, 3 );
         this.schedule(
-            function() { this.addZombies(); }, 15
-        );
+            function() {
+                if(this.no_zombie < GameLayer.MAX.Zombie){
+                    this.addZombies();}
+                }, 15 );
     },
 
     addZombies: function(){
         var newZombie = new Zombie();
         this.addChild(newZombie);
         this.zombieArr.push(newZombie);
+        this.no_zombie++;
     },
 
     addGums: function(){
@@ -51,6 +59,7 @@ var GameLayer = cc.LayerColor.extend({
             var newGum = new Gum();
             this.addChild(newGum);
             this.gumArr.push(newGum);
+            this.no_gum++;
         }
     },
 
@@ -66,7 +75,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     onKeyDown: function(e){
-        if(!Kyoda.isHide){    
+        if(!this.kyoda.isHide){    
             switch(e){
                 case cc.KEY.left:
                     this.kyoda.setDirection( true, Kyoda.DIR.LEFT );
@@ -102,7 +111,7 @@ var GameLayer = cc.LayerColor.extend({
 
     onKeyUp: function(e){
 
-        if(!Kyoda.isHide){    
+        if(!this.kyoda.isHide){    
             switch(e){
                 case cc.KEY.left:
                     this.kyoda.setDirection( false, Kyoda.DIR.LEFT );
@@ -112,7 +121,7 @@ var GameLayer = cc.LayerColor.extend({
                         break;
             }
         }
-        if(Kyoda.isHide){
+        if(this.kyoda.isHide){
             switch(e){
                 case cc.KEY.left:
                     this.bin.setDirection( false, Bin.DIR.LEFT );
@@ -126,18 +135,20 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update: function(){
-        if(!Kyoda.isHide && !this.kyoda.isDie){
+        if(!this.kyoda.isHide && !this.kyoda.isDie){
             this.gumArr.forEach( 
                 function( b ) {
                     if(b.closeTo(this.kyoda)){
                         b.remove(); 
                         this.addScore();
+                        this.no_gum--;
                     }}, this );
 
             this.zombieArr.forEach(
                 function( b ) {
-                    if(b.closeTo(this.kyoda)){
+                    if(!this.kyoda.ishide && b.closeTo(this.kyoda)){
                         this.kyoda.remove();
+                        this.no_zombie--;
                     }}, this);
         }
     }
@@ -152,3 +163,8 @@ var StartScene = cc.Scene.extend({
         this.addChild( layer );
     }
 });
+
+GameLayer.MAX ={
+    Gum: 20,
+    Zombie: 5
+};
