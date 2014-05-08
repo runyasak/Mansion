@@ -79,7 +79,10 @@ var Kyoda = cc.Sprite.extend({
 		else{
 			this.setVisible(true);
 			this.isHide = false;
+			this.setPosition(cc.p(bin.x,ground_floor1)); 
+			bin.changeSprite();
 		}
+		console.log(bin.x);
 	},
 
 	remove: function(){

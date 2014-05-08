@@ -50,7 +50,7 @@ var Ghost = cc.Sprite.extend({
 		if(this.inGame){
 			var myPos = this.getPosition();
 			var oPos = obj.getPosition();
-			return ((Math.abs(myPos.x - oPos.x))<=60 && Math.abs(myPos.y - oPos.y)<=120);
+			return ((Math.abs(myPos.x - oPos.x))<=50 && Math.abs(myPos.y - oPos.y)<=50);
 		}
 	},
 

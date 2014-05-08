@@ -55,6 +55,8 @@ var Bin = cc.Sprite.extend({
 		}else{
 			this.initWithFile(this.sprite1);
 			this.setAnchorPoint(0.5,0);	
+			this.isLeft = false;
+			this.isRight = false;
 			this.isFull = false;
 		}
 	},
@@ -75,7 +77,6 @@ var Bin = cc.Sprite.extend({
 		if( this.isRight && this.checkBorderRight()){
 			this.x += Bin.Vx;	
 		}
-
 		this.updatePosition();
 	}
 });
