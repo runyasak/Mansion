@@ -19,6 +19,7 @@ var Kyoda = cc.Sprite.extend({
 		this.isFadeOut = false;
 		this.rotationStack = 10;
 
+		this.scale = 1;
 		this.isImmortal = false;
 		this.immortalTime = 2;
 
@@ -132,11 +133,14 @@ var Kyoda = cc.Sprite.extend({
 		if(this.isDie){
 			this.setAnchorPoint(0.5, 0.5);
 			if(this.rotationStack <= 180) {
+				this.setRotation(this.getRotation()+30);
+				this.rotationStack+= 30;
+			} else{
 				this.setRotation(this.getRotation()+10);
 				this.rotationStack+= 10;
-			} else{
-				this.y++;
-				var fadeOut = cc.FadeOut.create(5); 
+				this.scale-=0.1;
+				this.setScale(this.scale);
+				var fadeOut = cc.FadeOut.create(10); 
 				if(!this.isFadeOut){
 					this.isFadeOut = true;
 					this.runAction(fadeOut);

@@ -11,6 +11,7 @@ var GameLayer = cc.LayerColor.extend({
         this.kyoda.setAnchorPoint(0.5,0);
 
         this.score = 0;
+        this.nowScore =0;
         this.no_gum = 0;
         this.no_monster = 0;
 
@@ -28,8 +29,7 @@ var GameLayer = cc.LayerColor.extend({
         this.scoreBoard();
         this.scheduleUpdate();
 
-        this.addZombies();
-        //this.unitSchedule();
+        this.unitSchedule();
     
         return true;
     },
@@ -72,6 +72,7 @@ var GameLayer = cc.LayerColor.extend({
         for(var i = 0; i < noMonster; i++){
             var newGum = new Gum();
             this.addChild(newGum);
+            newGum.runAction(cc.FadeIn.create(0.3));
             this.gumArr.push(newGum);
             this.no_gum++;
         }
@@ -85,7 +86,6 @@ var GameLayer = cc.LayerColor.extend({
 
     addScore: function(){
         this.score += 10;
-        this.scoreLabel.setString( this.score );
     },
 
     onKeyDown: function(e){
@@ -145,10 +145,15 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update: function(){
+        if(this.nowScore<this.score){
+            this.nowScore++;
+            this.scoreLabel.setString( this.nowScore );
+        }
         if(!this.kyoda.isHide && !this.kyoda.isDie){
             this.gumArr.forEach( 
                 function( b ) {
                     if(b.closeTo(this.kyoda)){
+                        console.log('hit');
                         b.remove(); 
                         this.addScore();
                         this.no_gum--;

@@ -5,14 +5,14 @@ var Gum = cc.Sprite.extend({
 		this.randomPosition();
 		this.x = this.getPosition().x;
 		this.y = this.getPosition().y;
+		this.isIngame = false;
+
+		this.setOpacity(0);
 
 		this.dir = Gum.DIR.Still;
 		this.setAnchorPoint(0.5,0);
 
-		var self = this;
-		this.schedule(
-			function() { self.autoMove(); },1
-		);
+		this.schedule( this.autoMove,1);
 		this.scheduleUpdate();
 	},
 
