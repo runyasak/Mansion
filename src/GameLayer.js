@@ -113,9 +113,7 @@ var GameLayer = cc.LayerColor.extend({
                     this.bin.setDirection( true, Bin.DIR.RIGHT ); 
                         break;
                 case cc.KEY.space: 
-                    //this.kyoda.x = this.bin.x;
-                    this.kyoda.hide(this.bin); 
-                    //this.bin.changeSprite(); 
+                    this.kyoda.hide(this.bin);  
                         break;
             }
         }
@@ -173,10 +171,9 @@ var GameLayer = cc.LayerColor.extend({
                 function( b ) {
                     if(b.closeTo(this.bin)){
                         this.kyoda.hide(this.bin);
-                        this.kyoda.x = this.bin.x; 
+                        //this.kyoda.x = this.bin.x; 
                     }}, this);
         }
-        console.log(this.bin.x);
     }
 });
 

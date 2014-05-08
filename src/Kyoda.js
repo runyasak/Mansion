@@ -79,10 +79,10 @@ var Kyoda = cc.Sprite.extend({
 		else{
 			this.setVisible(true);
 			this.isHide = false;
-			this.setPosition(cc.p(bin.x,ground_floor1)); 
+			this.setPosition(cc.p(bin.x,ground_floor1));
+			this.x = bin.x;
 			bin.changeSprite();
 		}
-		console.log(bin.x);
 	},
 
 	remove: function(){
@@ -99,7 +99,6 @@ var Kyoda = cc.Sprite.extend({
 				this.x += Kyoda.Vx;	
 			}
 			if( this.isJump ){
-			
 				Kyoda.Vy -= Kyoda.g;
 			}
 
