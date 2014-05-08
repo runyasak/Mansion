@@ -69,19 +69,20 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	hide: function(bin){
-		if(!this.isHide && bin.closeTo(this)){
-			this.setVisible(false);
-			this.isHide = true;
-			this.isLeft = false;
-			this.isRight = false;
-			bin.changeSprite();
-		}
-		else{
-			this.setVisible(true);
-			this.isHide = false;
-			this.setPosition(cc.p(bin.x,ground_floor1));
-			this.x = bin.x;
-			bin.changeSprite();
+		if(!this.isJump){
+			if(!this.isHide && bin.closeTo(this)){
+				this.setVisible(false);
+				this.isHide = true;
+				this.isLeft = false;
+				this.isRight = false;
+				bin.changeSprite();
+			}else if(this.isHide){
+				this.setVisible(true);
+				this.isHide = false;
+				this.setPosition(cc.p(bin.x,ground_floor1));
+				this.x = bin.x;
+				bin.changeSprite();
+			}
 		}
 	},
 

@@ -171,12 +171,11 @@ var GameLayer = cc.LayerColor.extend({
                 function( b ) {
                     if(b.closeTo(this.bin)){
                         this.kyoda.hide(this.bin);
-                        //this.kyoda.x = this.bin.x; 
+                        //this.kyoda.jump();
                     }}, this);
         }
     }
 });
-
 
 var StartScene = cc.Scene.extend({
     onEnter: function() {
