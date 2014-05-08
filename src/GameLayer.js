@@ -9,7 +9,6 @@ var GameLayer = cc.LayerColor.extend({
 
         this.kyoda = new Kyoda(750,ground_floor1);
         this.kyoda.setAnchorPoint(0.5,0);
-        this.kyoda.scheduleUpdate();
 
         this.score = 0;
         this.no_gum = 0;
@@ -28,7 +27,8 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.kyoda ,100);
         this.scoreBoard();
         this.scheduleUpdate();
-        this.addGhosts();
+
+        this.addZombies();
         //this.unitSchedule();
     
         return true;
@@ -153,28 +153,31 @@ var GameLayer = cc.LayerColor.extend({
                         this.addScore();
                         this.no_gum--;
                     }}, this );
-
+        }
+        if(!this.kyoda.isImmortal){
             this.zombieArr.forEach(
                 function( b ) {
-                    if(!this.kyoda.ishide && b.closeTo(this.kyoda)){
-                        this.kyoda.remove();
+                    if(!this.kyoda.isHide && b.closeTo(this.kyoda)){
+                        this.kyoda.die();
                         this.no_monster--;
                     }}, this);
             this.ghostArr.forEach(
                 function( b ) {
-                    if(!this.kyoda.ishide && b.closeTo(this.kyoda)){
-                        //this.kyoda.remove();
+                    if(!this.kyoda.isHide && b.closeTo(this.kyoda)){
+                        this.kyoda.die();
                     }}, this);
         }
         if(this.kyoda.isHide){
             this.ghostArr.forEach(
                 function( b ) {
                     if(b.closeTo(this.bin)){
+                        this.kyoda.activateImmortal();
                         this.kyoda.hide(this.bin);
-                        //this.kyoda.jump();
+                        this.kyoda.jump();
                     }}, this);
         }
     }
+    
 });
 
 var StartScene = cc.Scene.extend({

@@ -15,6 +15,33 @@ var Kyoda = cc.Sprite.extend({
 		
 		this.isHide = false;
 		this.isDie = false;
+
+		this.isFadeOut = false;
+		this.rotationStack = 10;
+
+		this.isImmortal = false;
+		this.immortalTime = 2;
+
+		this.scheduleUpdate();
+	},
+
+	activateImmortal: function() {
+		this.immortalTime = 2;
+		this.isImmortal = true;
+        this.schedule(this.immortalTimer,1);
+	},
+
+
+	immortalTimer: function(){
+		if(this.isImmortal && this.immortalTime > 0 ) {
+            this.immortalTime--;
+        }
+        else {
+            this.isImmortal = false;
+            //this.stopAction(this.immortalAction);
+            this.unschedule(this.immortalTimer);
+            this.setOpacity(255);
+        }
 	},
 
 	checkGround: function(){
@@ -86,12 +113,37 @@ var Kyoda = cc.Sprite.extend({
 		}
 	},
 
-	remove: function(){
-		this.removeFromParent( true );
+	die: function() {
 		this.isDie = true;
 	},
 
 	update: function( dt ){
+
+		if(this.isImmortal) {
+			if(!this.immortalAction || this.immortalAction.isDone()){
+				var fadeOut = cc.FadeOut.create(0.1);
+            	var fadeIn = cc.FadeIn.create(0.1);
+            	var delay = cc.DelayTime(0.1);
+            	this.immortalAction = cc.Sequence.create(fadeOut,delay,fadeIn);
+            	this.runAction(this.immortalAction);
+            }
+		}
+
+		if(this.isDie){
+			this.setAnchorPoint(0.5, 0.5);
+			if(this.rotationStack <= 180) {
+				this.setRotation(this.getRotation()+10);
+				this.rotationStack+= 10;
+			} else{
+				this.y++;
+				var fadeOut = cc.FadeOut.create(5); 
+				if(!this.isFadeOut){
+					this.isFadeOut = true;
+					this.runAction(fadeOut);
+				}
+			}
+		}
+
 		if(!this.isHide){
 			if( this.isLeft && this.checkBorderLeft()){
 				this.x -= Kyoda.Vx;
@@ -112,6 +164,8 @@ var Kyoda = cc.Sprite.extend({
 		}
 		this.flipCharacter();
 		this.updatePosition();
+
+
 	}
 });
 
