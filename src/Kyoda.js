@@ -3,6 +3,7 @@ var Kyoda = cc.Sprite.extend({
 	ctor: function(x, y){
 		this._super();
 		this.initWithFile(s_Kyoda);
+		this.setAnchorPoint(0.5,0);
 
 		this.x = x;
 		this.y = y;
@@ -118,7 +119,6 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	update: function( dt ){
-
 		if(this.isImmortal) {
 			if(!this.immortalAction || this.immortalAction.isDone()){
 				var fadeOut = cc.FadeOut.create(0.1);

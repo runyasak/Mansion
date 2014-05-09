@@ -1,41 +1,43 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
+
+        this.startGame();
+        this.setKeyboardEnabled(true);
+        this.scheduleUpdate();
+
+        return true;
+    },
+
+    startGame: function(){
         this.background = new Background();
-        this.background.setPosition( new cc.Point( 750, 300 ) );
-
-        this.floor1 = new Floor_1();
-        this.floor1.setAnchorPoint(0.5,0);
-        this.floor1.setPosition( new cc.Point(650,140));
-
         this.kyoda = new Kyoda(750,ground_floor1);
-        this.kyoda.setAnchorPoint(0.5,0);
+        this.bin = new Bin();
 
-        this.score = 0;
-        this.nowScore =0;
-        this.no_gum = 0;
-        this.no_monster = 0;
+        this.addChild( this.background );
+        this.addChild( this.kyoda ,100);
+        this.addFloor();
+        this.addChild( this.bin );
 
+        this.scoreBoard();
+
+        this.unitSchedule();
+
+    },
+
+    addFloor: function(){
+        this.floor1 = new Floor_1();
+        this.addChild(this.floor1);
+    },
+
+    unitSchedule: function(){
         this.gumArr = [];
         this.zombieArr = [];
         this.ghostArr = [];
 
+        //number of gum & monster
+        this.no_gum = 0;
+        this.no_monster = 0;
 
-        this.bin = new Bin();
-        this.setKeyboardEnabled(true);
-        this.addChild( this.background );
-        this.addChild( this.floor1 );
-        this.addChild( this.bin );
-        this.addChild( this.kyoda ,100);
-        this.scoreBoard();
-        this.scheduleUpdate();
-
-        this.addDoor();
-        //this.unitSchedule();
-    
-        return true;
-    },
-
-    unitSchedule: function(){
         //summon gum
         this.schedule(
             function() {
@@ -43,6 +45,7 @@ var GameLayer = cc.LayerColor.extend({
                     this.addGums();
                 }
             }, 3 );
+
         //summon monster
         this.schedule(
             function() {
@@ -53,7 +56,7 @@ var GameLayer = cc.LayerColor.extend({
                         case 1: this.addGhosts(); break;
                     }
                 }
-            }, 1 );
+            }, 15 );
     },
 
     addZombies: function(){
@@ -62,6 +65,7 @@ var GameLayer = cc.LayerColor.extend({
         this.zombieArr.push(newZombie);
         this.no_monster++;
     },
+
     addGhosts: function(){
         var newGhost = new Ghost();
         this.addChild(newGhost);
@@ -86,6 +90,9 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     scoreBoard: function(){
+        this.score = 0;
+        this.nowScore =0;
+        
         this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 40 );
         this.scoreLabel.setPosition( new cc.Point( 620, 550 ) );
         this.addChild( this.scoreLabel );
@@ -111,7 +118,7 @@ var GameLayer = cc.LayerColor.extend({
                     this.kyoda.hide(this.bin);
                        break;    
             }
-        }else{
+        } else{
             switch(e){
                 case cc.KEY.left: 
                     this.bin.setDirection( true, Bin.DIR.LEFT );  
