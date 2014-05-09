@@ -8,11 +8,13 @@ var Ghost = cc.Sprite.extend({
 
 		this.dir = Ghost.DIR.Still;
 
+		this.setOpacity(0);
 		this.inGame = false;
 		this.ghostBorn();
 		this.moveSchedule();
 		this.setAnchorPoint(0.5,0);
 		this.scheduleUpdate();
+
 	},
 
 	timeTrack: function(){
@@ -82,6 +84,18 @@ var Ghost = cc.Sprite.extend({
 	},
 
 	update: function( dt ){
+		if(!this.inGame) {
+			if(!this.summonAction || this.summonAction.isDone()){
+				var fadeOut = cc.FadeOut.create(0.5);
+            	var fadeIn = cc.FadeIn.create(0.5);
+            	var delay = cc.DelayTime(0.5);
+            	this.summonAction = cc.Sequence.create(fadeIn,delay,fadeOut);
+            	this.runAction(this.summonAction);
+            }
+		}
+		else if(this.inGame){
+			this.setOpacity(255);
+		}
 		if(this.checkBorderLeft() && this.checkBorderRight()){
 			this.x += Ghost.Vx*this.dir;
 		}

@@ -65,6 +65,7 @@ var GameLayer = cc.LayerColor.extend({
         var newGhost = new Ghost();
         this.addChild(newGhost);
         this.ghostArr.push(newGhost);
+        this.no_monster++;
     },
 
     addGums: function(){

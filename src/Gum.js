@@ -5,7 +5,6 @@ var Gum = cc.Sprite.extend({
 		this.randomPosition();
 		this.x = this.getPosition().x;
 		this.y = this.getPosition().y;
-		this.isIngame = false;
 
 		this.setOpacity(0);
 
