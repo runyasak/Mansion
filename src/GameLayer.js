@@ -29,7 +29,8 @@ var GameLayer = cc.LayerColor.extend({
         this.scoreBoard();
         this.scheduleUpdate();
 
-        this.unitSchedule();
+        this.addDoor();
+        //this.unitSchedule();
     
         return true;
     },
@@ -52,7 +53,7 @@ var GameLayer = cc.LayerColor.extend({
                         case 1: this.addGhosts(); break;
                     }
                 }
-            }, 15 );
+            }, 1 );
     },
 
     addZombies: function(){
@@ -79,6 +80,11 @@ var GameLayer = cc.LayerColor.extend({
         }
     },
 
+    addDoor: function(){
+        var door = new Door();
+        this.addChild(door);
+    },
+
     scoreBoard: function(){
         this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 40 );
         this.scoreLabel.setPosition( new cc.Point( 620, 550 ) );
@@ -101,7 +107,7 @@ var GameLayer = cc.LayerColor.extend({
                 case cc.KEY.up:
                     this.kyoda.jump();
                         break;
-                case cc.KEY.space:
+                case cc.KEY.down:
                     this.kyoda.hide(this.bin);
                        break;    
             }
@@ -113,7 +119,7 @@ var GameLayer = cc.LayerColor.extend({
                 case cc.KEY.right: 
                     this.bin.setDirection( true, Bin.DIR.RIGHT ); 
                         break;
-                case cc.KEY.space: 
+                case cc.KEY.down: 
                     this.kyoda.hide(this.bin);  
                         break;
             }
@@ -165,7 +171,6 @@ var GameLayer = cc.LayerColor.extend({
                 function( b ) {
                     if(!this.kyoda.isHide && b.closeTo(this.kyoda)){
                         this.kyoda.die();
-                        this.no_monster--;
                     }}, this);
             this.ghostArr.forEach(
                 function( b ) {
@@ -183,7 +188,6 @@ var GameLayer = cc.LayerColor.extend({
                     }}, this);
         }
     }
-    
 });
 
 var StartScene = cc.Scene.extend({

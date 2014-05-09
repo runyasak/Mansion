@@ -20,7 +20,8 @@
             'src/Gum.js',
             'src/Zombie.js',
             'src/Bin.js',
-            'src/Ghost.js'    //add your own files in order here
+            'src/Ghost.js',
+            'src/Door.js'    //add your own files in order here
         ]
     };
 
