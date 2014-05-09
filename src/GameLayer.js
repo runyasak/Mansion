@@ -1,6 +1,5 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
-        this.level = 1;
         this.startGame();
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
@@ -26,14 +25,15 @@ var GameLayer = cc.LayerColor.extend({
         if(this.score >= GameLayer.Score && !this.hasDoor){
             this.addDoor();
             this.hasDoor = true;
-            this.level++;
+            GameLayer.Level++;
+            GameLayer.MAX.Gun+= this.no_gum;
             this.addFloor();
         }
     },
 
     addFloor: function(){
         var x = GameLayer.Floor.X;
-        var y = GameLayer.Floor.Y+(this.level-1)*200;
+        var y = GameLayer.Floor.Y+(GameLayer.Level-1)*200;
         this.floor1 = new Floor_1(x, y);
         this.addChild(this.floor1, -90);
     },
@@ -223,6 +223,7 @@ var StartScene = cc.Scene.extend({
     }
 });
 
+GameLayer.Level = 1;
 GameLayer.MAX ={
     Gum: 20,
     Monster: 5

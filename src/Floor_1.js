@@ -4,5 +4,9 @@ var Floor_1 = cc.Sprite.extend({
 		this.initWithFile(s_Floor1);
 		this.setAnchorPoint(0.5,0);
         this.setPosition( new cc.Point(x, y));
+	},
+
+	update: function(){
+
 	}
 });
