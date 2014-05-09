@@ -4,8 +4,12 @@ var GameLayer = cc.LayerColor.extend({
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
 
-        this.MAX_Score = 20;
+        this.MAX_Score = 500;
         this.hasDoor = 2;
+
+        this.score = 0;
+        this.nowScore = 0;
+        this.chance_monster = 7;
 
         this.subBackgroundScale = 600;
         return true;
@@ -36,6 +40,9 @@ var GameLayer = cc.LayerColor.extend({
             this.addFloor();
             this.addBin();
             this.MAX_Score *= 2;
+            if(GameLayer.Level % 2 == 0 && this.chance_monster>3){
+                this.chance_monster--;
+            }
         }
     },
 
@@ -76,14 +83,15 @@ var GameLayer = cc.LayerColor.extend({
         //summon monster
         this.schedule(
             function() {
+                var chance = Math.floor(Math.random()*10)+1;
                 var choice = Math.floor(Math.random()*2);
-                if(this.no_monster < GameLayer.MAX.Monster){
+                if( (chance > this.chance_monster) && (this.no_monster < GameLayer.MAX.Monster)){
                     switch(choice){
                         case 0: this.addZombies(); break;
                         case 1: this.addGhosts(); break;
                     }
                 }
-            }, 15 );
+            }, 5 );
     },
 
     addZombies: function(){
@@ -121,14 +129,6 @@ var GameLayer = cc.LayerColor.extend({
     scoreBoard: function(){
         this.score = 0;
         this.nowScore = 0;
-
-        this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 40 );
-        this.scoreLabel.setPosition( new cc.Point( 620, 550 ) );
-        this.addChild( this.scoreLabel );
-    },
-
-    addScore: function(){
-        this.score += 10;
     },
 
     onKeyDown: function(e){
@@ -191,23 +191,30 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update: function(){
+        if(this.nowScore<this.score){
+            this.nowScore++;
+        }
+        var ScoreLayer = this.getParent().getChildByTag("ScoreLayer");
+        ScoreLayer.addScore(this.nowScore);
+
         if(this.kyoda.isGoUp){
             this.addChild(new SubBackground(750, this.subBackgroundScale),-200);
             this.setPosition(this.getPositionX(),this.getPosition().y-200);
             this.kyoda.isGoUp = false;
             this.subBackgroundScale+=600;
         }
-        if(this.nowScore<this.score){
-            this.nowScore++;
-            this.scoreLabel.setString( this.nowScore );
+        if(this.kyoda.isDie){
+            this.addChild(new GameOver(),120);
+            ScoreLayer.removeLabel();
+            this.unscheduleUpdate();
         }
         if(!this.kyoda.isHide && !this.kyoda.isDie){
             this.gumArr.forEach( 
                 function( b ) {
                     if(b.closeTo(this.kyoda)){
                         b.remove(); 
-                        this.addScore();
                         this.no_gum--;
+                        this.score+=10;
                     }}, this );
         }
         if(!this.kyoda.isImmortal){
@@ -242,6 +249,7 @@ var StartScene = cc.Scene.extend({
         var layer = new GameLayer();
         layer.init();
         this.addChild( layer );
+        this.addChild(new ScoreLayer(),100,"ScoreLayer");
     }
 });
 

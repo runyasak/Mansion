@@ -22,7 +22,9 @@
             'src/Bin.js',
             'src/Ghost.js',
             'src/Door.js',
-            'src/SubBackground.js'    //add your own files in order here
+            'src/SubBackground.js',
+            'src/ScoreLayer.js',
+            'src/GameOver.js'    //add your own files in order here
         ]
     };
 

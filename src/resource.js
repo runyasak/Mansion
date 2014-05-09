@@ -10,6 +10,7 @@ var s_Bin2 = "res/images/bin2.png";
 var s_SkullSign = "res/images/skullsign.png";
 var s_Ghost = "res/images/ghost.png";
 var s_Door = "res/images/door.png";
+var s_GameOver = "res/images/gameover.png";
 
 var g_resources = [
     //image
@@ -23,7 +24,8 @@ var g_resources = [
     {src:s_SkullSign},
     {src:s_Ghost},
     {src:s_Door},
-    {src:s_SubBackground}
+    {src:s_SubBackground},
+    {src:s_GameOver}
  
     //plist
  
