@@ -6,7 +6,4 @@ var Floor_1 = cc.Sprite.extend({
         this.setPosition( new cc.Point(x, y));
 	},
 
-	update: function(){
-
-	}
 });

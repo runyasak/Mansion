@@ -21,7 +21,8 @@
             'src/Zombie.js',
             'src/Bin.js',
             'src/Ghost.js',
-            'src/Door.js'    //add your own files in order here
+            'src/Door.js',
+            'src/SubBackground.js'    //add your own files in order here
         ]
     };
 

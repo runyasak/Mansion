@@ -4,31 +4,47 @@ var GameLayer = cc.LayerColor.extend({
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
 
-        this.hasDoor = false;
+        this.MAX_Score = 20;
+        this.hasDoor = 2;
+
+        this.subBackgroundScale = 600;
         return true;
     },
 
     startGame: function(){
         this.background = new Background();
-        this.kyoda = new Kyoda(Kyoda.Floor.X,Kyoda.Floor.Y);
-        this.bin = new Bin();
+        this.kyoda = new Kyoda(Kyoda.Floor.X, Kyoda.Floor.Y);
+        this.binArr = [];
 
         this.addChild( this.background ,-100);
         this.addChild( this.kyoda ,100);
         this.addFloor();
-        this.addChild( this.bin );
         this.scoreBoard();
+
+        this.addBin();
         this.unitSchedule();
     },
 
     levelUp: function(){
-        if(this.score >= GameLayer.Score && !this.hasDoor){
+        if( this.score >= this.MAX_Score && !this.kyoda.isLevelUp){
             this.addDoor();
             this.hasDoor = true;
-            GameLayer.Level++;
             GameLayer.MAX.Gun+= this.no_gum;
+            GameLayer.MAX.Monster+= 7;
+            GameLayer.Level++;
+            this.kyoda.isLevelUp = true;
             this.addFloor();
+            this.addBin();
+            this.MAX_Score *= 2;
         }
+    },
+
+    addBin: function(){
+        var x = Bin.Floor.X;
+        var y = Bin.Floor.Y+GameLayer.Floor.NextFloor*(GameLayer.Level-1);
+        var newBin = new Bin(x, y);
+        this.addChild(newBin);
+        this.binArr.push(newBin);
     },
 
     addFloor: function(){
@@ -128,22 +144,22 @@ var GameLayer = cc.LayerColor.extend({
                     this.kyoda.jump();
                         break;
                 case cc.KEY.down:
-                    this.kyoda.hide(this.bin);
+                    this.kyoda.hide(this.binArr[this.kyoda.floor-1]);
                        break;
                 case cc.KEY.space:
-                    this.kyoda.goUp(this.doorArr);
+                    this.kyoda.goUp(this.doorArr, this.binArr[this.kyoda.floor-1]);
                         break;    
             }
         } else{
             switch(e){
                 case cc.KEY.left: 
-                    this.bin.setDirection( true, Bin.DIR.LEFT );  
+                    this.binArr[this.kyoda.floor-1].setDirection( true, Bin.DIR.LEFT );  
                         break;
                 case cc.KEY.right: 
-                    this.bin.setDirection( true, Bin.DIR.RIGHT ); 
+                    this.binArr[this.kyoda.floor-1].setDirection( true, Bin.DIR.RIGHT ); 
                         break;
                 case cc.KEY.down: 
-                    this.kyoda.hide(this.bin);  
+                    this.kyoda.hide(this.binArr[this.kyoda.floor-1]);  
                         break;
             }
         }
@@ -164,10 +180,10 @@ var GameLayer = cc.LayerColor.extend({
         if(this.kyoda.isHide){
             switch(e){
                 case cc.KEY.left:
-                    this.bin.setDirection( false, Bin.DIR.LEFT );
+                    this.binArr[this.kyoda.floor-1].setDirection( false, Bin.DIR.LEFT );
                         break;
                 case cc.KEY.right:
-                    this.bin.setDirection( false, Bin.DIR.RIGHT );
+                    this.binArr[this.kyoda.floor-1].setDirection( false, Bin.DIR.RIGHT );
                         break;
             }
         }
@@ -175,6 +191,12 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update: function(){
+        if(this.kyoda.isGoUp){
+            this.addChild(new SubBackground(750, this.subBackgroundScale),-200);
+            this.setPosition(this.getPositionX(),this.getPosition().y-200);
+            this.kyoda.isGoUp = false;
+            this.subBackgroundScale+=600;
+        }
         if(this.nowScore<this.score){
             this.nowScore++;
             this.scoreLabel.setString( this.nowScore );
@@ -203,9 +225,9 @@ var GameLayer = cc.LayerColor.extend({
         if(this.kyoda.isHide){
             this.ghostArr.forEach(
                 function( b ) {
-                    if(b.closeTo(this.bin)){
+                    if(b.closeTo(this.binArr[this.kyoda.floor-1])){
                         this.kyoda.activateImmortal();
-                        this.kyoda.hide(this.bin);
+                        this.kyoda.hide(this.binArr[this.kyoda.floor-1]);
                         this.kyoda.jump();
                     }}, this);
         }
@@ -229,7 +251,6 @@ GameLayer.MAX ={
     Monster: 5
 };
 GameLayer.NextFloor = 180;
-GameLayer.Score = 500;
 GameLayer.Floor ={
     X: 650,
     Y: 140,

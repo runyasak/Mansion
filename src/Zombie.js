@@ -23,7 +23,7 @@ var Zombie = cc.Sprite.extend({
 	},
 	randomPosition: function(){
 		var newX = (Math.random()*650)+300;
-		this.setPosition(cc.p( newX, ground_floor1));
+		this.setPosition(cc.p( newX, ground_floor1+(GameLayer.Level-1)*200));
 	},
 
 	zombieBorn: function(){

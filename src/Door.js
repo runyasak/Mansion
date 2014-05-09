@@ -13,7 +13,7 @@ var Door = cc.Sprite.extend({
 
 	randomPosition: function(){
 		var newX = (Math.random()*650)+300;
-		this.setPosition(cc.p( newX, 140));
+		this.setPosition(cc.p( newX, 140+(GameLayer.Level-1)*200));
 	},
 
 	closeTo: function( obj ){

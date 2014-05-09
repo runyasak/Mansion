@@ -24,7 +24,7 @@ var Ghost = cc.Sprite.extend({
 	},
 	randomPosition: function(){
 		var newX = (Math.random()*650)+300;
-		this.setPosition(cc.p( newX, ground_floor1));
+		this.setPosition(cc.p( newX, ground_floor1+(GameLayer.Level-1)*200));
 	},
 
 	ghostBorn: function(){
@@ -35,6 +35,7 @@ var Ghost = cc.Sprite.extend({
 					this.initWithFile(s_Ghost);
 					this.setAnchorPoint(0.5, 0);
 					this.inGame = true;
+					this.setScale(0.8);
 				}
 				time++; },1
 			);
@@ -104,7 +105,7 @@ var Ghost = cc.Sprite.extend({
 	}
 });
 
-Ghost.Vx = 5;
+Ghost.Vx = 4;
 Ghost.DIR ={
 	Left: -1,
 	Right: 1,

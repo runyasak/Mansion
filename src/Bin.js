@@ -1,17 +1,15 @@
 var Bin = cc.Sprite.extend({
-	ctor: function(){
+	ctor: function(x, y){
 		this._super();
 		this.binSprite = s_Bin;
-
+		console.log('work');
 		this.sprite1 = s_Bin;
 		this.sprite2 = s_Bin2;
 
 		this.initWithFile(this.binSprite);
 
-
-		this.summon();
-		this.x = this.getPosition().x;
-		this.y = this.getPosition().y;
+		this.x = x;
+		this.y = y;
 		this.isLeft = false;
 		this.isRight = false;
 		this.isFull = false;
@@ -20,10 +18,6 @@ var Bin = cc.Sprite.extend({
 
 		this.setAnchorPoint(0.5,0);
 		this.scheduleUpdate();
-	},
-
-	summon: function(){
-		this.setPosition(cc.p( 450, ground_floor1-6));
 	},
 
 	setDirection: function( isMove, dir ){
@@ -60,6 +54,7 @@ var Bin = cc.Sprite.extend({
 			this.isFull = false;
 		}
 	},
+	
 	updatePosition: function(){
 		this.setPosition(cc.p(this.x, this.y));
 	},
@@ -86,4 +81,8 @@ Bin.DIR = {
 	LEFT: -1,
 	RIGHT: 1,
 	Still: 0
+};
+Bin.Floor = {
+	X: 450,
+	Y: 131
 };

@@ -1,5 +1,6 @@
 
 var s_Background = "res/images/background.png";
+var s_SubBackground = "res/images/subbackground.png";
 var s_Floor1 = "res/images/floor1.png";
 var s_Gum = "res/images/gum.png";
 var s_Kyoda = "res/images/kyoda.png";
@@ -21,7 +22,8 @@ var g_resources = [
     {src:s_Bin2},
     {src:s_SkullSign},
     {src:s_Ghost},
-    {src:s_Door}
+    {src:s_Door},
+    {src:s_SubBackground}
  
     //plist
  

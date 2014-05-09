@@ -17,12 +17,16 @@ var Kyoda = cc.Sprite.extend({
 		this.isHide = false;
 		this.isDie = false;
 
+		this.floor = 1;
 		this.isFadeOut = false;
 		this.rotationStack = 10;
 
 		this.scale = 1;
 		this.isImmortal = false;
 		this.immortalTime = 2;
+
+		this.isLevelUp = false;
+		this.isGoUp = false;
 
 		this.scheduleUpdate();
 	},
@@ -122,6 +126,11 @@ var Kyoda = cc.Sprite.extend({
 						this.setPosition(cc.p(this.x, newY));
 						this.y = newY;
 						Kyoda.Floor.Y+=GameLayer.Floor.NextFloor;
+
+						this.floor++;
+						this.isLevelUp = false;
+						this.isGoUp = true;
+
                     }}, this);
 	},
 
