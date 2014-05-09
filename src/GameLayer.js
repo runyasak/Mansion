@@ -1,38 +1,49 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
-
+        this.level = 1;
         this.startGame();
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
 
+        this.hasDoor = false;
         return true;
     },
 
     startGame: function(){
         this.background = new Background();
-        this.kyoda = new Kyoda(750,ground_floor1);
+        this.kyoda = new Kyoda(Kyoda.Floor.X,Kyoda.Floor.Y);
         this.bin = new Bin();
 
-        this.addChild( this.background );
+        this.addChild( this.background ,-100);
         this.addChild( this.kyoda ,100);
         this.addFloor();
         this.addChild( this.bin );
-
         this.scoreBoard();
-
         this.unitSchedule();
+    },
 
+    levelUp: function(){
+        if(this.score >= GameLayer.Score && !this.hasDoor){
+            this.addDoor();
+            this.hasDoor = true;
+            this.level++;
+            this.addFloor();
+        }
     },
 
     addFloor: function(){
-        this.floor1 = new Floor_1();
-        this.addChild(this.floor1);
+        var x = GameLayer.Floor.X;
+        var y = GameLayer.Floor.Y+(this.level-1)*200;
+        this.floor1 = new Floor_1(x, y);
+        this.addChild(this.floor1, -90);
     },
+
 
     unitSchedule: function(){
         this.gumArr = [];
         this.zombieArr = [];
         this.ghostArr = [];
+        this.doorArr = [];
 
         //number of gum & monster
         this.no_gum = 0;
@@ -85,14 +96,16 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     addDoor: function(){
-        var door = new Door();
-        this.addChild(door);
+        var door = new Door;
+        door.runAction(cc.FadeIn.create(0.3));
+        this.addChild(door, -80);
+        this.doorArr.push(door);
     },
 
     scoreBoard: function(){
         this.score = 0;
-        this.nowScore =0;
-        
+        this.nowScore = 0;
+
         this.scoreLabel = cc.LabelTTF.create( '0', 'Arial', 40 );
         this.scoreLabel.setPosition( new cc.Point( 620, 550 ) );
         this.addChild( this.scoreLabel );
@@ -116,7 +129,10 @@ var GameLayer = cc.LayerColor.extend({
                         break;
                 case cc.KEY.down:
                     this.kyoda.hide(this.bin);
-                       break;    
+                       break;
+                case cc.KEY.space:
+                    this.kyoda.goUp(this.doorArr);
+                        break;    
             }
         } else{
             switch(e){
@@ -167,7 +183,6 @@ var GameLayer = cc.LayerColor.extend({
             this.gumArr.forEach( 
                 function( b ) {
                     if(b.closeTo(this.kyoda)){
-                        console.log('hit');
                         b.remove(); 
                         this.addScore();
                         this.no_gum--;
@@ -194,6 +209,8 @@ var GameLayer = cc.LayerColor.extend({
                         this.kyoda.jump();
                     }}, this);
         }
+
+       this.levelUp();
     }
 });
 
@@ -209,4 +226,11 @@ var StartScene = cc.Scene.extend({
 GameLayer.MAX ={
     Gum: 20,
     Monster: 5
+};
+GameLayer.NextFloor = 180;
+GameLayer.Score = 500;
+GameLayer.Floor ={
+    X: 650,
+    Y: 140,
+    NextFloor: 200
 };

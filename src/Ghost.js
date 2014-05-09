@@ -104,7 +104,7 @@ var Ghost = cc.Sprite.extend({
 	}
 });
 
-Ghost.Vx = 2;
+Ghost.Vx = 5;
 Ghost.DIR ={
 	Left: -1,
 	Right: 1,

@@ -26,7 +26,7 @@ var Kyoda = cc.Sprite.extend({
 
 		this.scheduleUpdate();
 	},
-
+	
 	activateImmortal: function() {
 		this.immortalTime = 2;
 		this.isImmortal = true;
@@ -46,7 +46,7 @@ var Kyoda = cc.Sprite.extend({
 	},
 
 	checkGround: function(){
-		return this.y <= ground_floor1;
+		return this.y <= Kyoda.Floor.Y;
 	},
 
 	updatePosition: function(){
@@ -114,6 +114,17 @@ var Kyoda = cc.Sprite.extend({
 		}
 	},
 
+	goUp: function(doorArr){
+		doorArr.forEach(
+                function( b ) {
+                    if(!this.isHide && b.closeTo(this)){
+                        var newY = this.y+GameLayer.Floor.NextFloor;
+						this.setPosition(cc.p(this.x, newY));
+						this.y = newY;
+						Kyoda.Floor.Y+=GameLayer.Floor.NextFloor;
+                    }}, this);
+	},
+
 	die: function() {
 		this.isDie = true;
 	},
@@ -179,4 +190,8 @@ Kyoda.g = 0.5;
 Kyoda.DIR = {
 	LEFT: -1,
 	RIGHT: 1
+};
+Kyoda.Floor = {
+	X: 750,
+	Y: 137,
 };
