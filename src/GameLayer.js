@@ -91,7 +91,7 @@ var GameLayer = cc.LayerColor.extend({
                         case 1: this.addGhosts(); break;
                     }
                 }
-            }, 5 );
+            }, 3 );
     },
 
     addZombies: function(){
@@ -204,8 +204,9 @@ var GameLayer = cc.LayerColor.extend({
             this.subBackgroundScale+=600;
         }
         if(this.kyoda.isDie){
-            this.addChild(new GameOver(),120);
+            this.addChild(new GameOver(),140);
             ScoreLayer.removeLabel();
+            ScoreLayer.gameOverScoreLabel();
             this.unscheduleUpdate();
         }
         if(!this.kyoda.isHide && !this.kyoda.isDie){

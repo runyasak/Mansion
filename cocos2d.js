@@ -24,7 +24,8 @@
             'src/Door.js',
             'src/SubBackground.js',
             'src/ScoreLayer.js',
-            'src/GameOver.js'    //add your own files in order here
+            'src/GameOver.js',
+            'src/StartPage.js'    //add your own files in order here
         ]
     };
 
