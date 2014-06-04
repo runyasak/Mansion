@@ -85,13 +85,13 @@ var GameLayer = cc.LayerColor.extend({
             function() {
                 var chance = Math.floor(Math.random()*10)+1;
                 var choice = Math.floor(Math.random()*2);
-                if( (chance > this.chance_monster) && (this.no_monster < GameLayer.MAX.Monster)){
+                if( (chance > this.chance_monster)){
                     switch(choice){
                         case 0: this.addZombies(); break;
                         case 1: this.addGhosts(); break;
                     }
                 }
-            }, 3 );
+            }, 5 );
     },
 
     addZombies: function(){
@@ -204,7 +204,7 @@ var GameLayer = cc.LayerColor.extend({
             this.subBackgroundScale+=600;
         }
         if(this.kyoda.isDie){
-            this.addChild(new GameOver(),140);
+            ScoreLayer.gameOver();
             ScoreLayer.removeLabel();
             ScoreLayer.gameOverScoreLabel();
             this.unscheduleUpdate();
@@ -256,11 +256,10 @@ var StartScene = cc.Scene.extend({
 
 GameLayer.Level = 1;
 GameLayer.MAX ={
-    Gum: 20,
-    Monster: 5
+    Gum: 20
 };
 GameLayer.NextFloor = 180;
-GameLayer.Floor ={
+GameLayer.Floor ={      
     X: 650,
     Y: 140,
     NextFloor: 200

@@ -1,9 +1,14 @@
 var StartLayer = cc.LayerColor.extend({
     ctor: function() {
     	this._super();
+    	this.setKeyboardEnabled(true);  	
     	this.startPage = new StartPage();
     	this.addChild(this.startPage);
-    }
+    },
+    onKeyDown:function(e){
+    	var director = cc.Director.getInstance();
+    	director.replaceScene(cc.TransitionFade.create(1,new StartScene()));
+    },
 });
 var StartPage = cc.Sprite.extend({
 	ctor: function(){

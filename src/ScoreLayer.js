@@ -13,6 +13,9 @@ var ScoreLayer = cc.LayerColor.extend({
     removeLabel: function(){
     	this.removeChild(this.scoreLabel);
     },
+    gameOver: function(){
+        this.addChild(new GameOver(),140);
+    },
     gameOverScoreLabel: function(){
     	this.scoreLabel_2 = cc.LabelTTF.create( this.score, 'Segoe Script', 60 );
         this.scoreLabel_2.setPosition( new cc.Point( 630, 120 ) );
